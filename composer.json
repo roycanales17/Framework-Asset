@@ -1,0 +1,17 @@
+{
+    "name": "framework/installer",
+    "description": "Custom framework.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Robroy Canales",
+            "email": "canales.robroy123@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "php-school/cli-menu": "^4.3",
+        "jc21/clitable": "^1.3"
+    }
+}
