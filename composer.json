@@ -1,5 +1,5 @@
 {
-    "name": "framework/installer",
+    "name": "roy404/framework-install",
     "description": "Custom framework.",
     "type": "library",
     "license": "MIT",
