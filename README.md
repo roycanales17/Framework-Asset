@@ -3,7 +3,7 @@
 Install the bundle using Composer:
 
 ```
-composer require roy404/framework-install
+composer require roy404/framework product-name
 ```
 
 Install the bundle by using git link: (Make sure to create your own directory)
