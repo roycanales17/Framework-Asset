@@ -17,7 +17,7 @@
     },
     "scripts": {
         "post-create-project-cmd": [
-            "find ./ -type d -empty -exec touch {}/.gitkeep \\;"
+            "find . -type d -empty -exec touch {}/.gitkeep \\;"
         ]
     }
 }
