@@ -3,6 +3,7 @@
     "description": "Custom framework.",
     "type": "library",
     "license": "MIT",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Robroy Canales",
