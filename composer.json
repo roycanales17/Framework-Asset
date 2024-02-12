@@ -23,10 +23,5 @@
         "post-update-cmd": [
             "php artisan make:folders || true"
         ]
-    },
-    "config": {
-        "platform": {
-            "php": "8.0.*"
-        }
     }
 }
