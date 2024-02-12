@@ -42,32 +42,18 @@
 					exit();
 				
 				case 'serve':
-					
-					$start_application = "sudo php -S ".config( 'DB_HOST' ).":".config( 'APP_PORT' )." -t ".getcwd()."/public";
-					$password_command = "sudo -nv";
-					
-					$this->title( "PROCESSING", 37 );
-					
-					if ( getenv('HTACCESS_PROCESSED') )
-						$this->print( "The .htaccess file has been processed." );
-					
-					else
-						$this->print( "The .htaccess file is not found." );
-					
-					$this->title( "SUCCESS", 32 );
-					exec( $password_command, $output, $returnStatus );
-					
-					if ( $returnStatus === 0 )
-						shell_exec( $start_application );
-					
-					elseif ( $returnStatus === 1 ) {
-						$this->print( "Please enter the password below." );
-						shell_exec( $start_application );
-					}
-					
-					else
-						$this->info( "Error executing the command." );
-					
+
+					// Config
+					$app_port = config( 'APP_PORT' );
+					$app_host = config( 'APP_HOST' );
+					$app_directory = getcwd() . "/public";
+
+					// Start application
+					$output = shell_exec( "php -S $app_host:$app_port -t $app_directory" );
+
+					// Output the result
+					$this->info( $output );
+
 					break;
 				
 				case 'migrate':
