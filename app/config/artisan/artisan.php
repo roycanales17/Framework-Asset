@@ -45,7 +45,11 @@
 
 					// Config
 					$app_port = config( 'APP_PORT' );
-					$app_host = config( 'APP_HOST' );
+					$app_host = config( 'APP_IP' );
+
+					var_dump( $app_port, $app_host );
+					exit();
+
 					$app_directory = getcwd() . "/public";
 
 					// Start application
