@@ -3,7 +3,7 @@
         'name' => 'roy404/framework',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'c041ea7d0ea46eecc895c624c066982e7f8eee23',
+        'reference' => '220a5f4cf60fe8105f2f3e253c5243dd82991952',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -49,7 +49,7 @@
         'roy404/framework' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'c041ea7d0ea46eecc895c624c066982e7f8eee23',
+            'reference' => '220a5f4cf60fe8105f2f3e253c5243dd82991952',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
