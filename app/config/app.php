@@ -348,7 +348,7 @@
 		{
 			if ( !config( 'ARTISAN' ) )
 			{
-				if ( config( "APP_DEBUG" ) )
+				if ( config( "APP_DEBUG" ) && !Config::exist( 'APP_DEBUG_DISABLE' ) )
 				{
 					trace( "Session variables." )->store( Session::all() );
 					

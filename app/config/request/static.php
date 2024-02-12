@@ -21,6 +21,12 @@
 			return ( !empty( $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] ) ) ? $_SERVER[ 'HTTP_X_FORWARDED_FOR' ] : $_SERVER[ 'REMOTE_ADDR' ];
 		}
 		
+		static function is_json( $string ) 
+		{
+			json_decode ($string );
+    		return ( json_last_error() == JSON_ERROR_NONE );
+		}
+
 		#[NoReturn] static function exit(mixed $message = 0 ): void {
 			exit( $message );
 		}

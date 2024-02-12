@@ -2,7 +2,7 @@
 	
 	namespace Illuminate\Http;
 	
-	use Core\{App, Blades, Session, trace};
+	use Core\{App, Blades, Session, trace, Config};
 	
 	class Dispatch
 	{
@@ -100,17 +100,19 @@
 					
 					if ( !config( 'ARTISAN' ) )
 					{
+						ob_start();
+
 						switch ( $this->method )
 						{
 							case 'view':
-								
+
 								$obj = new Blades();
 								$obj->set_data( $this->data );
 								$obj->set_filepath( $this->view );
 								
 								echo( $obj->render() );
 								$this->save_recent_page();
-								
+
 								break;
 							
 							case 'redirect':
@@ -118,7 +120,7 @@
 								ob_start();
 								trace( 'Recent Session' )->store( Session::all() );
 								Session::put( 'recent_traces', trace::tracks( 'trace' ) );
-								header("Location: {$this->address->protocol}://{$this->address->host}{$this->actions}", true, $this->code );
+								header( "Location: {$this->address->protocol}://{$this->address->host}{$this->actions}", true, $this->code );
 								
 								break;
 							
@@ -141,6 +143,19 @@
 								}
 								
 								break;
+						}
+
+						$content = ob_get_contents();
+						ob_end_clean();
+
+						if ( $content )
+						{
+							if ( !Request::is_json( $content ) )
+								print( "<link rel='stylesheet' href='".config( "APP_URL" )."/resources/".config( "STYLE" )."'>" );
+							else 
+								Config::define( "APP_DEBUG_DISABLE", true );
+
+							echo( $content );
 						}
 						
 						Session::put( '$_GLOBAL_INPUTS', array_change_key_case( $_GET + $_POST ) );

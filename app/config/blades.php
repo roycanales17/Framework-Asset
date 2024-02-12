@@ -17,6 +17,7 @@
 	use DOMDocument;
 	use DOMImplementation;
 	use Illuminate\Http\Compose;
+	use Illuminate\Http\Request;
 	
 	Class Blades
 	{
@@ -44,13 +45,20 @@
 		public function render(): bool|string
 		{
 			$this->get_content( $this->full_path );
-			$dom = $this->get_html( $this->content );
-			$head = $this->create_head_tag( $dom );
-			$this->create_title_page( $dom, $head );
-			$this->create_links( $dom, $head );
-			$this->create_scripts( $dom, $head );
 			
-			return $dom->saveHTML();
+			if ( !Request::is_json( $this->content ) )
+			{
+				$dom = $this->get_html( $this->content );
+				$head = $this->create_head_tag( $dom );
+				
+				$this->create_title_page( $dom, $head );
+				$this->create_links( $dom, $head );
+				$this->create_scripts( $dom, $head );
+				
+				return $dom->saveHTML();
+			}
+			
+			return $this->content;
 		}
 		
 		private function check_content( string $path ): bool
@@ -82,33 +90,35 @@
 			{
 				$content = file_get_contents( $path );
 				
-				$this->look_for_template( $content );
-				$this->look_for_import( $content );
-				$this->refresh_content( $content );
-				
-				$cache = create_cache( $content );
-				$attr = load_content( $cache[ 'path' ], true );
-				$this->content = $attr[ 'content' ];
+				if ( !Request::is_json( $content ) )
+				{
+					$this->look_for_template( $content );
+					$this->look_for_import( $content );
+					$this->refresh_content( $content );
+					
+					$cache = create_cache( $content );
+					$attr = load_content( $cache[ 'path' ], true );
+					$this->content = $attr[ 'content' ];
+				}
+
+				else $this->content = $content;
 			}
 		}
 		
 		private function create_head_tag( &$dom )
 		{
 			$head = $dom->getElementsByTagName( 'head' );
-			
+
 			if ( $head->length === 0 )
 			{
 				$htmlTag = $dom->getElementsByTagName( 'html' )->item( 0 );
 				$headTag = $dom->createElement( 'head' );
 				
-				if ( $htmlTag )
-				{
-					if ( $htmlTag->hasChildNodes() )
-						$htmlTag->insertBefore( $headTag, $htmlTag->firstChild );
-					
-					else
-						$htmlTag->appendChild( $headTag );
-				}
+				if ( $htmlTag->hasChildNodes() )
+					$htmlTag->insertBefore( $headTag, $htmlTag->firstChild );
+				
+				else
+					$htmlTag->appendChild( $headTag );
 			}
 			
 			return $head;
@@ -160,20 +170,21 @@
 		}
 		
 		private function create_scripts( &$dom, &$head ): void
-		{
-			if ( !isset( $head[ 0 ] ) )
-				return;
-			
-			$scripts_tag = $head[ 0 ]->getElementsByTagName( 'script' );
+		{	
+			if ( isset( $head ) && is_array( $head ) && count( $head ) > 0 )
+				$scripts_tag = $head[ 0 ]->getElementsByTagName( 'script' );
+			else 
+				$scripts_tag = false;
+
 			$scripts = [
 				'module'	=>	config( "APP_URL" )."/resources/".config( "MODULE_JS" ),
 				'main'		=>	config( "APP_URL" )."/resources/".config( "JAVASCRIPT" )
 			];
-			
+
 			foreach ( $scripts as $path )
 			{
 				$create = false;
-				if ( $scripts_tag->length )
+				if ( $scripts_tag !== false && $scripts_tag->length )
 				{
 					foreach ( $scripts_tag as $script_tag )
 					{
@@ -202,9 +213,9 @@
 			$dom->preserveWhiteSpace = false;
 			$dom->formatOutput = true;
 			
-			if ( !empty( trim( $content ) ) ) {
-				@$dom->loadHTML( $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
-			}
+			if ( !empty( trim( $content ) ) ) 
+				@$dom->loadHTML( $content );
+			
 			else
 			{
 				$impl = new DOMImplementation();
