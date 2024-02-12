@@ -49,7 +49,7 @@
 		protected function checkIfValid( string $file , string $class ): bool
 		{
 			$_file = pathinfo( $file );
-			if ( $_file[ 'extension' ] == 'php' )
+			if ( $_file[ 'extension' ] == 'php' || in_array( $_file[ 'basename' ], [ '.gitkeep' ] ) )
 			{
 				foreach ( $this->temp_files as $value )
 				{

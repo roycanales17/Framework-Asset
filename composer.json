@@ -28,6 +28,10 @@
 
             "mkdir app/config/cache",
             "mkdir app/config/logs"
+        ],
+
+        "post-update-cmd": [
+            "php artisan make:directories"
         ]
     }
 }
