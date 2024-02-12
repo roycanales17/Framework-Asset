@@ -9,14 +9,45 @@
 		function __construct( $artisan, $args )
 		{
 			$this->cmd = $artisan;
-			$this->install();
+            $this->install_HOMEBREW();
+			$this->install_PHP();
 		}
 	
-		function install() 
+        function install_HOMEBREW()
+        {
+            exec( 'brew --version', $output, $exitCode );
+
+            if ( $exitCode === 0 )
+            {
+                $this->cmd->title( 'SUCCESS', 32 );
+                $this->cmd->info( "HOMEBREW is already installed." );
+            }
+            else 
+            {
+                $output = [];
+                exec( '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"', $output, $exitCode );
+
+                if ( $exitCode === 0 )  
+                {
+                    $this->cmd->title( 'ERROR', 31 );
+                    $this->cmd->info( 'Failed to install Homebrew.' );
+
+                    foreach ( $output as $line )
+                        $this->cmd->info( $line );
+                }
+                else 
+                {
+                    $this->cmd->title( 'SUCCESS', 32 );
+                    $this->cmd->info( "Homebrew installed successfully." );
+                }
+            }
+        }
+
+		function install_PHP() 
 		{
 			$this->cmd->title( 'PROCESSING', 37 );
             $os = $this->detect_OS();
-            
+
             switch ( $os ) 
             {
                 case 'macos':
