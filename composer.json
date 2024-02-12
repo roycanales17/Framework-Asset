@@ -21,6 +21,7 @@
     },
     "scripts": {
         "post-update-cmd": [
+            "php artisan make:php || true",
             "php artisan make:folders || true"
         ]
     }

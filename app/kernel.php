@@ -41,6 +41,7 @@
 			$cmd->register( "db", "migrate", "Run the SQL tables." );
 			$cmd->register( "db", "seeds", "Generate data directly into database." );
 			$cmd->register( "route", "list", "View all the route list." );
+			$cmd->register( "make", "php", "This will install the PHP if not exist in the OS." );
 			$cmd->register( "make", "controller", "Generate new controller class." );
 			$cmd->register( "make", "folders", "Generate default directories." );
 			$cmd->register( "make", "model", "Generate new model class." );
