@@ -153,8 +153,8 @@
 			echo "\n\033[1;$code;44m [ $name ] \033[0m\n\n";
 		}
 		
-		public function info( mixed $info ): void {
-			echo "INFO: $info\n\n";
+		public function info( mixed $info, bool $space = true ): void {
+			echo "INFO: $info\n".( $space ? "\n" : "" );
 		}
 		
 		public function print( array|string $commands ): void

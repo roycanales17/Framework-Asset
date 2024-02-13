@@ -164,6 +164,9 @@
 			$this->create_login_page();
 			$this->create_register_page();
 			$this->create_profile_page();
+
+			# Finally kill the session
+			$this->cmd->kill_session();
 		}
 
 		function create_auth_table(): bool 
@@ -214,7 +217,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -223,7 +226,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -274,7 +277,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -283,7 +286,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -320,7 +323,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -329,7 +332,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -390,7 +393,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -399,7 +402,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -507,7 +510,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -516,7 +519,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -562,7 +565,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -571,7 +574,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -819,7 +822,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -828,7 +831,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -874,7 +877,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -883,7 +886,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -917,7 +920,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -926,7 +929,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -978,7 +981,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -987,7 +990,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -1041,7 +1044,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -1050,7 +1053,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -1108,7 +1111,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -1117,7 +1120,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -1191,7 +1194,7 @@
 				if ( file_exists( "$directory/$file_name" ) )
 				{
 					$this->cmd->title( 'ERROR', 31 );
-					$this->cmd->info( "Already exist with the given path ($directory/$file_name)." );
+					$this->cmd->info( "Already exist with the given path ($directory/$file_name).", false );
 					return false;
 				}
 				
@@ -1200,7 +1203,7 @@
 				fclose( $file );
 			}
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 
@@ -1220,7 +1223,7 @@
 			fwrite( $file, trim( $content ) );
 			fclose( $file );
 			
-			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name).", false );
 			return true;
 		}
 	}
