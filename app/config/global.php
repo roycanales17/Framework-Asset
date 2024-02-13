@@ -100,7 +100,7 @@
 		{
 			if ( config( 'DEVELOPMENT' ) ) printInfo();
 			
-			print( "<link rel='stylesheet' href='".config( "APP_URL" )."/resources/".config( "STYLE" )."'>" );
+			default_style();
 			print "<div class='trace-container'><pre>";
 			foreach ( $print as $n )
 			{
@@ -233,13 +233,17 @@
 		return new temp( $message, $slice );
 	}
 	
+	function default_style(): void {
+		print( "<link rel='stylesheet' href='".config( "APP_URL" )."/resources/".config( "STYLE" )."'>" );
+	}
+
 	function exitTrace(): void
 	{
 		ob_start();
 		$tracks = trace::tracks( 'trace' );
 		$recent = trace::tracks( 'recent' );
 		echo "\n";
-		print( "<link rel='stylesheet' href='".config( "APP_URL" )."/resources/".config( "STYLE" )."'>" );
+		default_style();
 		?>
 		<!-- TRACK SECTION -->
 		<table class="tracks shadow" cellpadding="15">
