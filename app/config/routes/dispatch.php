@@ -151,8 +151,13 @@
 						if ( $content )
 						{
 							if ( !Request::is_json( $content ) )
-								default_style();
-
+							{
+								if ( !$this->view )
+								{
+									trace( "Running the closure object." );
+									default_style();	
+								}
+							}
 							else 
 							{
 								Config::define( "APP_DEBUG_DISABLE", true );
