@@ -1017,9 +1017,6 @@
 	</style>
 </head>
 <body>
-<div class='>
-
-</div>
 	@import('auth/includes/navbar');
 	@container;
 	<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js' crossorigin='anonymous'></script>
@@ -1060,34 +1057,34 @@
 		{
 			$content = "
 
-@template(''auth/includes/template'');
+@template('auth/includes/template');
 
-<form method=''post'' action=''auth/login''>
+<form method='post' action='auth/login'>
 	
 	@token(true);
 	
-	<div class=''login-container''>
-		<div class=''login-form''>
-			<h2 class=''mb-4''>Login</h2>
-			<div class=''mb-3''>
-				<label for=''email'' class=''form-label''>Email Address</label>
-				<input type=''email'' class=''form-control'' id=''email'' name=''email'' autocomplete=''username'' value=''@input('email')''>
-				<span class=''text-danger''>
+	<div class='login-container'>
+		<div class='login-form'>
+			<h2 class='mb-4'>Login</h2>
+			<div class='mb-3'>
+				<label for='email' class='form-label'>Email Address</label>
+				<input type='email' class='form-control' id='email' name='email' autocomplete='username' value='@input('email')'>
+				<span class='text-danger'>
 					<small>{{ \$errors[ 'email' ] ?? ''  }}</small>
 				</span>
 			</div>
-			<div class=''mb-3''>
-				<label for=''password'' class=''form-label''>Password</label>
-				<input type=''password'' class=''form-control'' id=''password'' name=''password'' autocomplete=''current-password'' value=''@input('password')''>
-				<span class=''text-danger''>
+			<div class='mb-3'>
+				<label for='password' class='form-label'>Password</label>
+				<input type='password' class='form-control' id='password' name='password' autocomplete='current-password' value='@input('password')'>
+				<span class='text-danger'>
 					<small>{{ \$errors[ 'password' ] ?? ''  }}</small>
 				</span>
 			</div>
-			<button type=''submit'' class=''btn btn-primary''>Sign In</button>
+			<button type='submit' class='btn btn-primary'>Sign In</button>
 		</div>
 		<br/>
 		<center>
-			<span class=''text-danger''>{{ \$errors[ 'default' ] ?? '' }}</span>
+			<span class='text-danger'>{{ \$errors[ 'default' ] ?? '' }}</span>
 		</center>
 	</div>
 	
