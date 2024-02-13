@@ -152,8 +152,12 @@
 						{
 							if ( !Request::is_json( $content ) )
 								print( "<link rel='stylesheet' href='".config( "APP_URL" )."/resources/".config( "STYLE" )."'>" );
+							
 							else 
+							{
 								Config::define( "APP_DEBUG_DISABLE", true );
+								header( 'Content-Type: application/json; charset=utf-8' );
+							}
 
 							echo( $content );
 						}
