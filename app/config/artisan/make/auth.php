@@ -163,6 +163,7 @@
 			$this->create_template();
 			$this->create_login_page();
 			$this->create_register_page();
+			$this->create_profile_page();
 		}
 
 		function create_auth_table(): bool 
@@ -1198,6 +1199,26 @@
 				fwrite( $file, trim( $content ) );
 				fclose( $file );
 			}
+			
+			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
+			return true;
+		}
+
+		function create_profile_page(): bool 
+		{
+			$content = "
+@template('auth/includes/template');
+
+<h1 class='text-center pt-5'>Welcome {{ \$account[ 'name' ] }}</h1>
+";
+			
+			$file_name = "profile.blade.php";
+			$directory = getcwd()."\\app\\views\\auth";
+			$directory = str_replace( '\\', '/', $directory );
+			
+			$file = fopen( "$directory/$file_name", 'w' ) or die( 'Cannot open file: ' . $file_name );
+			fwrite( $file, trim( $content ) );
+			fclose( $file );
 			
 			$this->cmd->info( "Successfully created, given path ($directory/$file_name)." );
 			return true;
