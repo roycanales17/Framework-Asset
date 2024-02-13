@@ -150,15 +150,7 @@
 
 						if ( $content )
 						{
-							if ( !Request::is_json( $content ) )
-							{
-								if ( !$this->view )
-								{
-									trace( "Running the closure object." );
-									default_style();	
-								}
-							}
-							else 
+							if ( Request::is_json( $content ) )
 							{
 								Config::define( "APP_DEBUG_DISABLE", true );
 								header( 'Content-Type: application/json; charset=utf-8' );
