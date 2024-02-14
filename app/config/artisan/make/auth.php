@@ -2,6 +2,7 @@
 	
 	namespace App\Terminal\Make;
 	
+	use Core\Config;
 	use PhpSchool\CliMenu\CliMenu;
 	use PhpSchool\CliMenu\Builder\CliMenuBuilder;
 	
@@ -16,6 +17,12 @@
 		
 		function __construct( $artisan, $input )
 		{
+			if ( Config::exist( 'ARTISAN_ONCE' ) ) 
+			{
+				$artisan->print( 'Sorry we can only perform this when you run first the `php artisan`.' );
+				return;
+			}
+
 			$this->cmd = $artisan;
 			
 			if ( !$this->cmd->has_session() )

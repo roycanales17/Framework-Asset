@@ -2,8 +2,8 @@
 	
 	namespace App\Terminal;
 	
-	use Core\App;
-	
+	use Core\{App, Config};
+
 	class Artisan
 	{
 		protected static array $session = [];
@@ -238,14 +238,17 @@
 				$class = "App\\Terminal\\{$config[ 'type' ]}\\{$config[ 'class' ]}";
 				new $class( $this, $config[ 'args' ] );
 			}
-			else app::error( "File not exist given ($path)." );
+
+			else app::error( "Artisan action file not exist given ($path)." );
 		}
 		
 		public function run( array $args = [] ): void
 		{
 			if ( isset( $args[ 1 ] ) )
+			{
+				Config::define( 'ARTISAN_ONCE', true );
 				$this->execute( $args );
-			
+			}
 			else
 			{
 				$this->clear();
