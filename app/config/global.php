@@ -187,7 +187,17 @@
 		$obj->class = is_object( $class ) ? $class : new $class();
 		$obj->reflection = new ReflectionMethod( $class, $classMethod );
 		$args = classInstanceParams( $obj->reflection->getParameters() );
-		
+
+        foreach ( $args as $params_attr ) {
+            if ( is_object( $params_attr ) ) {
+                $className = get_class( $params_attr );
+                if ( str_starts_with( $className, 'App\Rules\\' ) ) {
+                    $req = new $className();
+                    $req->validate_instance();
+                }
+            }
+        }
+
 		return call_user_func([ $obj->class, $classMethod ], ...$args );
 	}
 	

@@ -351,9 +351,10 @@
 				if ( config( "APP_DEBUG" ) && !Config::exist( 'APP_DEBUG_DISABLE' ) )
 				{
 					trace( "Session variables." )->store( Session::all() );
-					
-					// Display the debug
-					exitTrace();
+
+                    # Display the debug
+                    if ( Request::isContentTypeJson() === false )
+                        exitTrace();
 				}
 				
 				// End line

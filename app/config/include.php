@@ -42,6 +42,8 @@
 		
 		/* REQUEST */
 		'compose' 	=>	dirname( __DIR__ ). '/config/request/compose.php',
+        'input_val' =>	dirname( __DIR__ ). '/config/request/inputValidation.php',
+        'file_val'  =>	dirname( __DIR__ ). '/config/request/fileValidation.php',
 		'req_static'=>	dirname( __DIR__ ). '/config/request/static.php',
 		'request' 	=>	dirname( __DIR__ ). '/config/request/request.php',
 		
