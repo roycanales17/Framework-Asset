@@ -13,7 +13,7 @@
 			if ( self::$resources )
 				return self::$resources;
 			
-			$res = new pdo( 'mysql:host='.config( 'DB_HOST' ).';dbname='.$database.';charset=UTF8', config( 'DB_USER' ), config( 'DB_PASSWORD' ) );
+			$res = new pdo( 'mysql:host='.config( 'DB_HOST' ). ':' .config( 'DB_PORT' ).';dbname='.$database.';charset=UTF8', config( 'DB_USER' ), config( 'DB_PASSWORD' ) );
 			$res->setAttribute( pdo::ATTR_PERSISTENT, true );
 			$res->setAttribute( pdo::ATTR_EMULATE_PREPARES, false );
 			$res->setAttribute( pdo::ATTR_CURSOR, pdo::CURSOR_FWDONLY );
