@@ -151,16 +151,11 @@
 						if ( $content )
 						{
 							if ( Request::is_json( $content ) )
-							{
 								Config::define( "APP_DEBUG_DISABLE", true );
-								header( 'Content-Type: application/json; charset=utf-8' );
-							}
-
-							echo( $content );
 						}
 						
 						Session::put( '$_GLOBAL_INPUTS', array_change_key_case( $_GET + $_POST ) );
-						Request::exit();
+                        Request::exit( $content );
 					}
 			}
 		}

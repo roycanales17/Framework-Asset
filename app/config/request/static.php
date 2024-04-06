@@ -231,6 +231,14 @@
             $this->message = $array;
         }
 
+        protected function setHttpResponseCode( int $code = 200 ): void {
+            http_response_code( $code );
+        }
+
+        protected function setJsonTypeResponse(): void {
+            header('Content-Type: application/json; charset=utf-8');
+        }
+
         public function validate_instance(): bool|string
         {
             $class = get_called_class();
@@ -244,13 +252,13 @@
                     $obj = new $class();
 
                     if ( method_exists( $obj, 'authorize' ) && !$obj->authorize() ) {
-                        $this->json( 'Unauthorized', 401 );
+                        return $this->json( 'Unauthorized', 401 );
                     }
                     else {
                         if ( method_exists( $obj, 'rules' ) && $rules = $obj->rules() ) {
                             $this->validate( $rules );
                             if ( $this->isFailed() )
-                                $this->json( $this->errors( true ), 401 );
+                                return $this->json( $this->errors( true ), 401 );
                         }
                     }
                 }

@@ -99,8 +99,8 @@
         }
 
         public function json( mixed $data, int $code = 200 ) {
-            http_response_code( $code );
-            header('Content-Type: application/json');
-            self::exit( json_encode( $data, JSON_UNESCAPED_UNICODE ) );
+            $this->setHttpResponseCode( $code );
+            $this->setJsonTypeResponse();
+            return json_encode( $data );
         }
     }

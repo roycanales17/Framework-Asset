@@ -193,12 +193,16 @@
                 $className = get_class( $params_attr );
                 if ( str_starts_with( $className, 'App\Rules\\' ) ) {
                     $req = new $className();
-                    $req->validate_instance();
+                    if ( ( $res = $req->validate_instance() ) !== true )
+                        Request::exit( $res );
                 }
             }
         }
 
-		return call_user_func([ $obj->class, $classMethod ], ...$args );
+        $result = call_user_func([ $obj->class, $classMethod ], ...$args );
+        echo $result;
+
+        return $result;
 	}
 	
 	function classInstanceParams( array $parameters = [] ): array
