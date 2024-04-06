@@ -53,8 +53,8 @@
                     $rule_val = $rule[ 1 ] ?? 0;
                     $value = $this->getInput( $key );
 
-                    if ( !$this->validateRules( $key, $rule_key, $rule_val ) )
-                        continue;
+                    # if ( !$this->validateRules( $key, $rule_key, $rule_val ) )
+                    #    continue;
 
                     if ( $rule_val )
                     {
