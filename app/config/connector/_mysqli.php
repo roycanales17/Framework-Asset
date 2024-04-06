@@ -14,7 +14,7 @@
 			
 			mysqli_report( MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT );
 			
-			$res = new mysqli( config( 'DB_HOST' ), config( 'DB_USER' ), config( 'DB_PASSWORD' ), $database );
+			$res = new mysqli( config( 'DB_HOST' ). ':' .config( 'DB_PORT' ), config( 'DB_USER' ), config( 'DB_PASSWORD' ), $database );
 			$res->options( MYSQLI_OPT_CONNECT_TIMEOUT, 5 );
 			$res->options( MYSQLI_OPT_READ_TIMEOUT, 10 );
 			$res->options( MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1 );
