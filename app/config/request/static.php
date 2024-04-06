@@ -1,7 +1,8 @@
 <?php
 	
 	namespace Illuminate\Http;
-	use JetBrains\PhpStorm\NoReturn;
+	use Illuminate\Database\db;
+    use JetBrains\PhpStorm\NoReturn;
 
     class Blueprint
     {
@@ -82,6 +83,11 @@
                             case 'extensions':
                             case 'mimes':
                                 $this->validateFileMimeType( $key, $rule_val );
+                                break;
+                                
+                            default:
+                                if ( !db::table( $rule_key )->where( $rule_val, $value )->count() )
+                                    $this->setMessage( $key, $this->getMessage( $key, $rule_key ) ?: "Invalid `$rule_val` given value ($value)." );
                                 break;
                         }
                     }
