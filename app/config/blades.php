@@ -9,6 +9,7 @@
 	 * 		@import( 'INCLUDE_FILE' );
 	 * 		@token( true|false );
 	 * 		@input( 'GLOBAL_INPUT' )
+     *      @public( 'STYLE.CSS' )
 	 * </script>
 	 *
 	 */
@@ -79,6 +80,7 @@
 		{
 			$this->look_for_token( $content );
 			$this->look_for_braces( $content );
+            $this->look_for_resources( $content );
 			$this->look_for_config( $content );
 			$this->look_for_input( $content );
 			$this->look_for_auth( $content );
@@ -316,6 +318,13 @@
 			$replacement = '<?= config( "$1" ) ?>';
 			$content = preg_replace( $pattern, $replacement, $content );
 		}
+
+        protected function look_for_resources( string &$content ): void
+        {
+            $pattern = '/@public\(\s*[\'"]([^\'"]+)[\'"]\s*\)\s*;/i';
+            $replacement = '<?= config( "RESOURCES" ) . "/$1" ?>';
+            $content = preg_replace( $pattern, $replacement, $content );
+        }
 		
 		protected function look_for_input( string &$content ): void
 		{
