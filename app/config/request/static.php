@@ -242,7 +242,7 @@
         }
 
         protected function setJsonTypeResponse(): void {
-            header('Content-Type: application/json; charset=utf-8');
+            header('Content-Type: application/json');
         }
 
         public function validate_instance(): bool|string
