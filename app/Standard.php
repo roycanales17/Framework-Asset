@@ -1,24 +1,13 @@
 <?php
 
-	use App\Content\Blade;
-	use App\Headers\Response;
-
-	function views(string $path, array $data = []): string {
-		ob_start();
-
-		# Compile the template
-		Blade::render("views/". ltrim( $path, '/' ) .".blade.php", extract: $data);
-
-		# Capture the content
-		return ob_get_clean();
-	}
-
-	function response(mixed $content = '', int $status = 200, array $headers = []): Response
+	function dump(mixed $data, bool $exit = false): void
 	{
-		return new Response($content, $status, $headers);
-	}
+		$printed = print_r($data, true);
+		echo <<<HTML
+			<pre> 
+				$printed
+			</pre>
+		HTML;
 
-	function redirect(string $url, int $status = 302): void
-	{
-		response()->redirect($url, $status);
+		if ($exit) exit;
 	}

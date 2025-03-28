@@ -1,0 +1,24 @@
+<html lang="{{ $g_page_lang }}">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="csrf-token" content="{{ csrf_token() }}">
+
+		<title>{{ $g_page_title }}</title>
+		<link rel="stylesheet" href="resources/style.css" />
+
+		<meta property="og:title" content="{{ $g_page_title }}">
+		<meta property="og:description" content="{{ $g_page_description }}">
+		<meta property="og:url" content="{{ $g_page_url }}">
+		<meta name="twitter:card" content="summary_large_image">
+
+		<script type="application/javascript" src="resources/main.js"></script>
+	</head>
+	<body>
+		{!! $g_page_content !!}
+
+		<noscript>
+			<p>JavaScript is required for this website to function properly.</p>
+		</noscript>
+	</body>
+</html>
