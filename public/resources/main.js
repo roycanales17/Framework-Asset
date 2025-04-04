@@ -75,12 +75,17 @@ class stream {
 		elements.forEach(element => {
 			for (let attr of element.attributes) {
 				if (attr.name.startsWith("wire:keydown.")) {
-					element.addEventListener("keydown", (e) => {
+					let lastKey = '';
+					element.addEventListener("keydown", (e) => lastKey = e.key);
+					element.addEventListener("input", (e) => {
+						e.stopImmediatePropagation();
+
+						const value = element.value;
 
 						let keyEvent = attr.name.split(".")[1];
 						let action = element.getAttribute(`wire:keydown.${keyEvent}`);
 
-						let pressedKey = e.key.toLowerCase();
+						let pressedKey = lastKey.toLowerCase();
 						let mappedKey = keyEvent.toLowerCase();
 
 						const keyMap = {
@@ -91,11 +96,11 @@ class stream {
 							" ": "space"
 						};
 
-						if (pressedKey === mappedKey || keyMap[pressedKey] === mappedKey) {
+						if (keyEvent === 'keypress' || pressedKey === mappedKey || keyMap[pressedKey] === mappedKey) {
 							const formData = new FormData();
 
-							if (action.includes("event.target.value") && element.value !== undefined)
-								action = action.replace("event.target.value", `'${element.value}'`);
+							if (action.includes("event.target.value") && value !== undefined)
+								action = action.replace("event.target.value", `'${value}'`);
 
 							formData.append('_method', action);
 							this.submitRequest(formData);
@@ -120,7 +125,7 @@ class stream {
 		fetch(`/api/stream-wire/${component}`, {
 			method: "POST",
 			headers: {
-				"X-STREAM-WIRE": "true",
+				"X-STREAM-WIRE": true,
 				"X-CSRF-TOKEN": token
 			},
 			body: formData
@@ -132,8 +137,7 @@ class stream {
 			const newComponent = doc.querySelector(`[data-component="${this.component.getAttribute('data-component')}"]`);
 
 			if (newComponent) {
-				this.component.replaceWith(newComponent);
-				this.component = newComponent;
+				this.updateElements(this.component, newComponent); // Update only changed elements
 
 				document.querySelectorAll("script[data-dynamic]").forEach(script => script.remove());
 
@@ -157,4 +161,32 @@ class stream {
 			console.error("Error submitting request:", error);
 		});
 	}
+
+	updateElements(oldComponent, newComponent) {
+		const oldElements = oldComponent.querySelectorAll("*");
+		const newElements = newComponent.querySelectorAll("*");
+
+		oldComponent.setAttribute('data-properties', newComponent.getAttribute('data-properties'));
+		oldComponent.setAttribute('data-duration', newComponent.getAttribute('data-duration'));
+
+		oldElements.forEach((oldEl, index) => {
+			const newEl = newElements[index];
+
+			if (!newEl) return;
+
+			const isFocused = document.activeElement === oldEl;
+
+			if (oldEl.outerHTML !== newEl.outerHTML)
+				oldEl.replaceWith(newEl);
+
+			if (isFocused) {
+				newEl.focus();
+				if (newEl.value !== undefined) {
+					newEl.selectionStart = oldEl.selectionStart;
+					newEl.selectionEnd = oldEl.selectionEnd;
+				}
+			}
+		});
+	}
+
 }
