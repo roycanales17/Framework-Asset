@@ -23,6 +23,7 @@ class stream {
 		this.keyEvent();
 		this.formEvent();
 		this.modelEvent();
+		this.keyPress();
 	}
 
 	modelEvent() {
@@ -64,10 +65,33 @@ class stream {
 		});
 	}
 
+	keyPress() {
+		const events = this.component.querySelectorAll("[wire\\:keyPress]");
+		events.forEach(elem => {
+			elem.addEventListener('input', (e) => {
+				e.stopImmediatePropagation();
+
+				let updatedValue = e.target.value;
+				let action = elem.getAttribute("wire:keyPress");
+				let formData = new FormData();
+
+				if (action.includes("event.target.value") && updatedValue !== undefined) {
+					action = action.replace("event.target.value", `'${updatedValue}'`);
+				}
+
+				formData.append('_method', action);
+				this.submitRequest(formData);
+
+				formData.append('_method', action);
+				this.submitRequest(formData);
+			});
+		});
+	}
+
 	keyEvent() {
 		const keys = [
-			"enter", "escape", "backspace", "arrowUp", "arrowDown", "arrowLeft", "arrowRight",
-			"space", "shift", "ctrl", "alt", "tab", "delete", "keyPress"
+			"enter", "escape", "backspace", "arrowup", "arrowdown", "arrowleft", "arrowright",
+			"space", "shift", "ctrl", "alt", "tab", "delete"
 		];
 		const selector = `[wire\\:keydown]` + keys.map(key => `, [wire\\:keydown\\.${key}]`).join('');
 		const elements = this.component?.querySelectorAll(selector) || [];
@@ -75,33 +99,30 @@ class stream {
 		elements.forEach(element => {
 			for (let attr of element.attributes) {
 				if (attr.name.startsWith("wire:keydown.")) {
-					let lastKey = '';
-					element.addEventListener("keydown", (e) => lastKey = e.key);
-					element.addEventListener("input", (e) => {
+					let keyEvent = attr.name.split(".")[1];
+					let action = element.getAttribute(attr.name);
+
+					element.addEventListener("keydown", (e) => {
 						e.stopImmediatePropagation();
 
-						const value = element.value;
-
-						let keyEvent = attr.name.split(".")[1];
-						let action = element.getAttribute(`wire:keydown.${keyEvent}`);
-
-						let pressedKey = lastKey.toLowerCase();
-						let mappedKey = keyEvent.toLowerCase();
+						let pressedKey = e.key.toLowerCase();
+						const mappedKey = keyEvent.toLowerCase();
 
 						const keyMap = {
-							"arrowup": "arrowUp",
-							"arrowdown": "arrowDown",
-							"arrowleft": "arrowLeft",
-							"arrowright": "arrowRight",
+							"arrowup": "arrowup",
+							"arrowdown": "arrowdown",
+							"arrowleft": "arrowleft",
+							"arrowright": "arrowright",
 							" ": "space"
 						};
 
-						if (keyEvent === 'keypress' || pressedKey === mappedKey || keyMap[pressedKey] === mappedKey) {
+						if (pressedKey === mappedKey || keyMap[pressedKey] === mappedKey) {
+							let updatedValue = element.value;
+							if (action.includes("event.target.value") && updatedValue !== undefined) {
+								action = action.replace("event.target.value", `'${updatedValue}'`);
+							}
+
 							const formData = new FormData();
-
-							if (action.includes("event.target.value") && value !== undefined)
-								action = action.replace("event.target.value", `'${value}'`);
-
 							formData.append('_method', action);
 							this.submitRequest(formData);
 						}
