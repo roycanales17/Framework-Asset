@@ -7,7 +7,6 @@
 	use App\Utilities\Stream;
 	use App\Utilities\Config;
 	use App\Utilities\Application;
-
 	use App\Utilities\Cache;
 	use App\Utilities\Session;
 	use App\Utilities\Logger;
@@ -47,7 +46,7 @@
 		Cache::configure('', '');
 
 		// Configure web routes
-		Route::configure(config('APP_ROOT'), [ 'routes/web.php' ])->captured(function (string $content, int $code) {
+		Route::configure(config('APP_ROOT')."/routes", ['web.php'])->captured(function (string $content, int $code) {
 
 			if ($code == 404)
 				return;
@@ -66,7 +65,7 @@
 		});
 
 		// Configure API routes
-		Route::configure(config('APP_ROOT'), [ 'routes/api.php' ], 'api')->captured(function (string $content) {
+		Route::configure(config('APP_ROOT')."/routes", ['api.php'], 'api')->captured(function (string $content) {
 			echo($content);
 		});
 
