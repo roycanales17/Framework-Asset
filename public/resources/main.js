@@ -1,4 +1,3 @@
-
 class stream {
 
 	constructor(identifier) {
@@ -81,9 +80,6 @@ class stream {
 
 				formData.append('_method', action);
 				this.submitRequest(formData);
-
-				formData.append('_method', action);
-				this.submitRequest(formData);
 			});
 		});
 	}
@@ -158,56 +154,30 @@ class stream {
 			const newComponent = doc.querySelector(`[data-component="${this.component.getAttribute('data-component')}"]`);
 
 			if (newComponent) {
-				this.updateElements(this.component, newComponent); // Update only changed elements
+				morphdom(this.component, newComponent, {
+					getNodeKey: node => {
+						if (node.nodeType !== 1) return null;
+						return node.id || node.getAttribute("data-key") || node.getAttribute("data-component");
+					},
 
-				document.querySelectorAll("script[data-dynamic]").forEach(script => script.remove());
+					onBeforeElUpdated: (fromEl, toEl) => {
+						if (fromEl.isEqualNode(toEl)) return false;
+						return true;
+					},
 
-				newComponent.querySelectorAll("script").forEach(script => {
-					const newScript = document.createElement("script");
-					if (script.src) {
-						newScript.src = script.src;
-						newScript.async = script.async;
-					} else {
-						newScript.textContent = script.textContent;
+					onBeforeNodeDiscarded: (node) => {
+						return true;
 					}
-					newScript.setAttribute("data-dynamic", "true");
-					document.body.appendChild(newScript);
 				});
 
+				// Keep using the same reference since the element was not replaced
 			} else {
 				console.warn("Updated component not found in response.");
 			}
+
 		})
 		.catch(error => {
 			console.error("Error submitting request:", error);
 		});
 	}
-
-	updateElements(oldComponent, newComponent) {
-		const oldElements = oldComponent.querySelectorAll("*");
-		const newElements = newComponent.querySelectorAll("*");
-
-		oldComponent.setAttribute('data-properties', newComponent.getAttribute('data-properties'));
-		oldComponent.setAttribute('data-duration', newComponent.getAttribute('data-duration'));
-
-		oldElements.forEach((oldEl, index) => {
-			const newEl = newElements[index];
-
-			if (!newEl) return;
-
-			const isFocused = document.activeElement === oldEl;
-
-			if (oldEl.outerHTML !== newEl.outerHTML)
-				oldEl.replaceWith(newEl);
-
-			if (isFocused) {
-				newEl.focus();
-				if (newEl.value !== undefined) {
-					newEl.selectionStart = oldEl.selectionStart;
-					newEl.selectionEnd = oldEl.selectionEnd;
-				}
-			}
-		});
-	}
-
 }
