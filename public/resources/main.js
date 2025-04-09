@@ -169,8 +169,6 @@ class stream {
 						return true;
 					}
 				});
-
-				// Keep using the same reference since the element was not replaced
 			} else {
 				console.warn("Updated component not found in response.");
 			}
