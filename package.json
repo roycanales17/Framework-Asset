@@ -8,9 +8,10 @@
     "watch": "concurrently \"npm run watch:sass\" \"npm run watch:tailwind\"",
 
     "build:sass": "sass public/resources/scss/style.scss public/build/style.css",
-    "build:tailwind": "tailwindcss -i public/resources/main.css -o public/build/tailwind.css",
+    "build:tailwind": "npx @tailwindcss/cli -i public/resources/main.css -o public/build/tailwind.css",
+
     "watch:sass": "sass --watch public/resources/scss/style.scss:public/build/style.css",
-    "watch:tailwind": "tailwindcss -w -i public/resources/main.css -o public/build/tailwind.css"
+    "watch:tailwind": "npx @tailwindcss/cli -w -i public/resources/main.css -o public/build/tailwind.css"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,9 @@
     "sass": "^1.86.3"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^8.2.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.3"
   }
 }

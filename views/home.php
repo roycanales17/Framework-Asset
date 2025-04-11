@@ -10,9 +10,9 @@
 		{
 			return <<<HTML
 			    <>
-			        <h2>{$this->welcomeMessage}</h2>
+			        <h2 class="text-3xl">{$this->welcomeMessage}</h2>
 			        <button wire:click="render">Click me</button>
-			        <input type="text" wire:model="welcomeMessage">
+			        <input type="text" placeholder="Type here..." wire:model="welcomeMessage">
 			    </>
 			HTML;
 		}
