@@ -1,6 +1,8 @@
 .DS_Store
 .env
 .idea
+build/node_modules
+public/resources/style.css
 
 logs
 vendor
