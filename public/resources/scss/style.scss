@@ -1,0 +1,7 @@
+@use 'variables' as *;
+@use 'layout' as *;
+
+.component-container {
+  all: unset;
+  display: contents;
+}
