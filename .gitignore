@@ -3,6 +3,7 @@
 .idea
 build/node_modules
 public/resources/style.css
+public/resources/style.css.map
 
 logs
 vendor
