@@ -2,8 +2,9 @@
 .env
 .idea
 build/node_modules
-public/resources/style.css
-public/resources/style.css.map
+public/tailwind.css
+public/style.css
+public/style.css.map
 
 logs
 vendor
