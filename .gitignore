@@ -1,10 +1,9 @@
 .DS_Store
 .env
 .idea
-build/node_modules
-public/tailwind.css
-public/style.css
-public/style.css.map
+
+public/build
 
 logs
 vendor
+node_modules
