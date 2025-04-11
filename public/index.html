@@ -5,18 +5,18 @@
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
 		<title>{{ $g_page_title }}</title>
-		<link rel="stylesheet" href="resources/style.css" />
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="tailwind.css" />
 
 		<meta property="og:title" content="{{ $g_page_title }}">
 		<meta property="og:description" content="{{ $g_page_description }}">
 		<meta property="og:url" content="{{ $g_page_url }}">
 		<meta name="twitter:card" content="summary_large_image">
 
-		<script src="resources/tailwind/tailwind-3.4.16.min.js"></script>
 		<script src="resources/morphdom/morphdom-umd.min.js"></script>
 		<script src="resources/main.js"></script>
 	</head>
-	<body>
+	<body class="bg-green-500 text-center">
 		{!! $g_page_content !!}
 
 		<noscript>
