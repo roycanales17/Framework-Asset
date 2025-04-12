@@ -5,7 +5,7 @@
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
 		<title>{{ $g_page_title }}</title>
-		<link rel="stylesheet" href="build/style.css" />
+		<link rel="stylesheet" href="build/main.css" />
 		<link rel="stylesheet" href="build/tailwind.css" />
 
 		<meta property="og:title" content="{{ $g_page_title }}">
@@ -13,10 +13,10 @@
 		<meta property="og:url" content="{{ $g_page_url }}">
 		<meta name="twitter:card" content="summary_large_image">
 
-		<script src="resources/morphdom/morphdom-umd.min.js"></script>
-		<script src="resources/main.js"></script>
+		<script type="module" src="resources/main.js"></script>
+		{!! config('DEVELOPMENT') ? '<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>' : '' !!}
 	</head>
-	<body class="text-center bg-gray-400">
+	<body class="text-center">
 		{!! $g_page_content !!}
 
 		<noscript>
