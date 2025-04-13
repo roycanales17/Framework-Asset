@@ -45,8 +45,13 @@
 		// Configure cache
 		Cache::configure('', '');
 
+		// Route path
+		$route = config('APP_ROOT')."/routes";
+
 		// Configure web routes
-		Route::configure(config('APP_ROOT')."/routes", ['web.php'])->captured(function (string $content, int $code) {
+		Route::configure($route, [
+			'web.php'
+		])->captured(function (string $content, int $code) {
 
 			if ($code == 404)
 				return;
@@ -65,7 +70,9 @@
 		});
 
 		// Configure API routes
-		Route::configure(config('APP_ROOT')."/routes", ['api.php'], 'api')->captured(function (string $content) {
+		Route::configure($route, [
+			'api.php'
+		], 'api')->captured(function (string $content) {
 			echo($content);
 		});
 
