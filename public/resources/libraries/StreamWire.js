@@ -8,15 +8,6 @@ class stream {
 			return;
 		}
 
-		[...component.children].forEach(child => {
-			if (child.tagName === "FRAGMENT") {
-				while (child.firstChild) {
-					component.insertBefore(child.firstChild, child);
-				}
-				child.remove();
-			}
-		});
-
 		this.component = component;
 		this.clickEvent();
 		this.keyEvent();
@@ -25,10 +16,20 @@ class stream {
 		this.keyPress();
 	}
 
+	hasNestedFragment() {
+		return !!this.component.querySelector("fragment fragment");
+	}
+
+	filterFragmentSafe(elements) {
+		if (!this.hasNestedFragment()) return Array.from(elements);
+		return Array.from(elements).filter(el => !el.closest("fragment fragment"));
+	}
+
 	modelEvent() {
 		const models_r = {};
-		const models = this.component.querySelectorAll("[wire\\:model]");
-		models.forEach(model => {
+		const filtered = this.filterFragmentSafe(this.component.querySelectorAll("[wire\\:model]"));
+
+		filtered.forEach(model => {
 			const name = model.getAttribute("wire:model");
 			models_r[name] = model.value;
 		});
@@ -37,8 +38,9 @@ class stream {
 	}
 
 	formEvent() {
-		const forms = this.component.querySelectorAll("[wire\\:submit]");
-		forms.forEach(form => {
+		const filtered = this.filterFragmentSafe(this.component.querySelectorAll("[wire\\:submit]"));
+
+		filtered.forEach(form => {
 			form.addEventListener("submit", (e) => {
 				e.preventDefault();
 				const action = form.getAttribute("wire:submit");
@@ -51,8 +53,9 @@ class stream {
 	}
 
 	clickEvent() {
-		const events = this.component.querySelectorAll("[wire\\:click]");
-		events.forEach(elem => {
+		const filtered = this.filterFragmentSafe(this.component.querySelectorAll("[wire\\:click]"));
+
+		filtered.forEach(elem => {
 			elem.addEventListener('click', (e) => {
 				e.preventDefault();
 				const action = elem.getAttribute("wire:click");
@@ -65,8 +68,9 @@ class stream {
 	}
 
 	keyPress() {
-		const events = this.component.querySelectorAll("[wire\\:keyPress]");
-		events.forEach(elem => {
+		const filtered = this.filterFragmentSafe(this.component.querySelectorAll("[wire\\:keyPress]"));
+
+		filtered.forEach(elem => {
 			elem.addEventListener('input', (e) => {
 				e.stopImmediatePropagation();
 
@@ -90,9 +94,9 @@ class stream {
 			"space", "shift", "ctrl", "alt", "tab", "delete"
 		];
 		const selector = `[wire\\:keydown]` + keys.map(key => `, [wire\\:keydown\\.${key}]`).join('');
-		const elements = this.component?.querySelectorAll(selector) || [];
+		const filtered = this.filterFragmentSafe(this.component.querySelectorAll(selector));
 
-		elements.forEach(element => {
+		filtered.forEach(element => {
 			for (let attr of element.attributes) {
 				if (attr.name.startsWith("wire:keydown.")) {
 					let keyEvent = attr.name.split(".")[1];
@@ -130,14 +134,22 @@ class stream {
 
 	submitRequest(formData) {
 
+		const compiled = {};
 		const token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 		const component = this.component.getAttribute('data-component');
 		const properties = this.component.getAttribute('data-properties');
 		const models = this.modelEvent();
 
+		const fragmentElements = this.component.querySelectorAll('fragment');
+		fragmentElements.forEach(fragment => {
+			const comp = fragment.getAttribute("data-component");
+			compiled[comp] = fragment.outerHTML;
+		});
+
 		formData.append('_component', component);
 		formData.append('_properties', properties);
 		formData.append('_models', JSON.stringify(models));
+		formData.append('_compiled', JSON.stringify(compiled));
 
 		fetch(`/api/stream-wire/${component}`, {
 			method: "POST",
@@ -147,36 +159,33 @@ class stream {
 			},
 			body: formData
 		})
-			.then(response => response.text())
-			.then(html => {
-				const parser = new DOMParser();
-				const doc = parser.parseFromString(html, "text/html");
-				const newComponent = doc.querySelector(`[data-component="${this.component.getAttribute('data-component')}"]`);
+		.then(response => response.text())
+		.then(newComponent => {
+			if (newComponent) {
+				morphdom(this.component, newComponent, {
+					getNodeKey: node => {
+						if (node.nodeType !== 1) return null;
+						return node.id || node.getAttribute("data-key") || node.getAttribute("data-component");
+					},
 
-				if (newComponent) {
-					morphdom(this.component, newComponent, {
-						getNodeKey: node => {
-							if (node.nodeType !== 1) return null;
-							return node.id || node.getAttribute("data-key") || node.getAttribute("data-component");
-						},
+					onBeforeElUpdated: (fromEl, toEl) => {
+						if (fromEl.isEqualNode(toEl)) return false;
+						return true;
+					},
 
-						onBeforeElUpdated: (fromEl, toEl) => {
-							if (fromEl.isEqualNode(toEl)) return false;
-							return true;
-						},
+					onBeforeNodeDiscarded: (node) => {
+						return true;
+					}
+				});
 
-						onBeforeNodeDiscarded: (node) => {
-							return true;
-						}
-					});
-				} else {
-					console.warn("Updated component not found in response.");
-				}
+			} else {
+				console.warn("Updated component not found in response.");
+			}
 
-			})
-			.catch(error => {
-				console.error("Error submitting request:", error);
-			});
+		})
+		.catch(error => {
+			console.error("Error submitting request:", error);
+		});
 	}
 }
 
