@@ -42,7 +42,9 @@ class stream {
 
 		filtered.forEach(form => {
 			form.addEventListener("submit", (e) => {
+				e.stopImmediatePropagation();
 				e.preventDefault();
+
 				const action = form.getAttribute("wire:submit");
 				const formData = new FormData(form);
 
@@ -57,7 +59,9 @@ class stream {
 
 		filtered.forEach(elem => {
 			elem.addEventListener('click', (e) => {
+				e.stopImmediatePropagation();
 				e.preventDefault();
+
 				const action = elem.getAttribute("wire:click");
 				const formData = new FormData();
 
@@ -72,6 +76,7 @@ class stream {
 
 		filtered.forEach(elem => {
 			elem.addEventListener('input', (e) => {
+				e.stopImmediatePropagation();
 
 				let updatedValue = e.target.value;
 				let action = elem.getAttribute("wire:keyPress");
@@ -102,6 +107,7 @@ class stream {
 					let action = element.getAttribute(attr.name);
 
 					element.addEventListener("keydown", (e) => {
+						e.stopImmediatePropagation();
 
 						let pressedKey = e.key.toLowerCase();
 						const mappedKey = keyEvent.toLowerCase();
@@ -162,14 +168,17 @@ class stream {
 		.then(response => response.text())
 		.then(newComponent => {
 			if (newComponent) {
+
 				morphdom(this.component, newComponent, {
 					getNodeKey: node => {
 						if (node.nodeType !== 1) return null;
-						return node.id || node.getAttribute("data-key") || node.getAttribute("data-component");
+						return node.id || node.getAttribute("data-component");
 					},
 
 					onBeforeElUpdated: (fromEl, toEl) => {
-						if (fromEl.isEqualNode(toEl)) return false;
+						if (fromEl.isEqualNode(toEl))
+							return false;
+
 						return true;
 					},
 
@@ -177,6 +186,8 @@ class stream {
 						return true;
 					}
 				});
+
+				init(this.component.getAttribute("data-component"));
 
 			} else {
 				console.warn("Updated component not found in response.");
