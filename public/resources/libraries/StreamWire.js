@@ -72,7 +72,6 @@ class stream {
 
 		filtered.forEach(elem => {
 			elem.addEventListener('input', (e) => {
-				e.stopImmediatePropagation();
 
 				let updatedValue = e.target.value;
 				let action = elem.getAttribute("wire:keyPress");
@@ -103,7 +102,6 @@ class stream {
 					let action = element.getAttribute(attr.name);
 
 					element.addEventListener("keydown", (e) => {
-						e.stopImmediatePropagation();
 
 						let pressedKey = e.key.toLowerCase();
 						const mappedKey = keyEvent.toLowerCase();
@@ -118,12 +116,14 @@ class stream {
 
 						if (pressedKey === mappedKey || keyMap[pressedKey] === mappedKey) {
 							let updatedValue = element.value;
+							let param = action;
+
 							if (action.includes("event.target.value") && updatedValue !== undefined) {
-								action = action.replace("event.target.value", `'${updatedValue}'`);
+								param = action.replace("event.target.value", `'${updatedValue}'`);
 							}
 
 							const formData = new FormData();
-							formData.append('_method', action);
+							formData.append('_method', param);
 							this.submitRequest(formData);
 						}
 					});
