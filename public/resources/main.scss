@@ -2,3 +2,31 @@
   all: unset;
   display: contents;
 }
+
+.display-block {
+  display: block;
+}
+
+.display-grid {
+  display: grid;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.display-none {
+  display: none;
+}
+
+.display-inline-block {
+  display: inline-block;
+}
+
+.display-inline-flex {
+  display: inline-flex;
+}
+
+.display-inline-grid {
+  display: inline-grid;
+}
