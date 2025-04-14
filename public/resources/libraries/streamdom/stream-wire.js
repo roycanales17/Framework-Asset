@@ -8,9 +8,9 @@ class stream {
 			console.error("Component not found for identifier:", identifier);
 		}
 
+		this.container = 'fragment';
 		this.component = component;
 		this.identifier = identifier;
-		this.container = 'fragment';
 		this.token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 	}
 
