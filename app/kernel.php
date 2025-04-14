@@ -76,7 +76,7 @@
 			echo($content);
 		});
 
-	})->failed(function (Exception $exception) {
+	})->failed(function (Exception|Error $exception) {
 		$logger = new Logger('../logs', logFile: 'error.log');
 		$logger->error($exception->getMessage(), [
 			'file' => $exception->getFile(),
