@@ -29,6 +29,7 @@ export function load(stream)
 			if (debounceTimer)
 				clearTimeout(debounceTimer);
 
+			let activeEl = document.activeElement;
 			let value = e.target.value;
 			let action = expression;
 
@@ -50,15 +51,32 @@ export function load(stream)
 			if (matchedDelay) {
 				debounceTimer = setTimeout(() => {
 					stream.submit({ '_method': action });
+					stream.ajax((res) => {
+						if (directive.includes('.clear'))
+							element.value = '';
+
+						if (res.status && activeEl === element && res.duration >= 1000) {
+							element.focus();
+						}
+					});
 				}, delays[matchedDelay]);
 			} else {
 				stream.submit({ '_method': action });
+				stream.ajax((res) => {
+					if (directive.includes('.clear'))
+						element.value = '';
+
+					if (res.status && activeEl === element && res.duration >= 1000) {
+						element.focus();
+					}
+				});
 			}
 		});
-	}, ['100ms', '300ms', '500ms', '1000ms', '1300ms', '1500ms', '2000ms']);
+	}, ['100ms', '300ms', '500ms', '1000ms', '1300ms', '1500ms', '2000ms', 'clear']);
 
 	stream.wire('wire:keydown.enter', function (element, expression, directive) {
 		element.addEventListener('keydown', (e) => {
+			let activeEl = document.activeElement;
 			let pressedKey = e.key.toLowerCase();
 			let action = expression;
 
@@ -70,12 +88,16 @@ export function load(stream)
 					action = action.replace("event.target.value", `'${element.value}'`);
 
 				stream.submit({'_method': action});
+				stream.ajax(({ status }) => {
+					if (status && directive.includes('.clear'))
+						element.value = '';
 
-				if (directive.includes('.clear'))
-					element.value = '';
+					if (activeEl === element)
+						element.focus();
+				});
 			}
 		});
-	}, ['clear','prevent']);
+	}, ['clear', 'prevent']);
 
 	stream.wire('wire:keydown.escape', function (element, expression, directive) {
 		element.addEventListener('keydown', (e) => {
@@ -90,12 +112,13 @@ export function load(stream)
 					action = action.replace("event.target.value", `'${element.value}'`);
 
 				stream.submit({'_method': action});
-
-				if (directive.includes('.clear'))
-					element.value = '';
+				stream.ajax(({ status }) => {
+					if (status && directive.includes('.clear'))
+						element.value = '';
+				});
 			}
 		});
-	}, ['clear','prevent']);
+	}, ['clear', 'prevent']);
 
 	stream.wire('wire:keydown.backspace', function (element, expression, directive) {
 		element.addEventListener('keydown', (e) => {
@@ -120,7 +143,6 @@ export function load(stream)
 			let action = expression;
 
 			if (pressedKey === 'tab') {
-
 				if (directive.includes('.prevent'))
 					e.preventDefault();
 
@@ -128,9 +150,10 @@ export function load(stream)
 					action = action.replace("event.target.value", `'${element.value}'`);
 
 				stream.submit({'_method': action});
-
-				if (directive.includes('.clear'))
-					element.value = '';
+				stream.ajax(({ status }) => {
+					if (status && directive.includes('.clear'))
+						element.value = '';
+				});
 			}
 		});
 	}, ['clear','prevent']);
@@ -151,5 +174,39 @@ export function load(stream)
 			}
 		});
 	}, ['prevent']);
+
+	stream.wire('wire:loader', function (element, directive, expression) {
+		stream.ajax(({status}) => {
+
+			if (directive.includes('classList.add'))
+				element.classList[!status ? 'add' : 'remove'](expression);
+
+			if (directive.includes('classList.remove'))
+				element.classList[!status ? 'remove' : 'add'](expression);
+
+			if (directive.includes('style')) {
+				if (!status) {
+					expression.split(';').forEach(style => {
+						const [property, value] = style.split(':');
+						if (property && value) {
+							element.style[property.trim()] = value.trim();
+						}
+					});
+				} else {
+					expression.split(';').forEach(style => {
+						const [property] = style.split(':');
+						if (property) {
+							element.style.removeProperty(property.trim());
+						}
+					});
+				}
+			}
+
+			if (directive.includes('attr'))
+				!status
+					? element.setAttribute(expression, true)
+					: element.removeAttribute(expression);
+		});
+	}, ['classList.add', 'classList.remove', 'attr', 'style']);
 }
 
