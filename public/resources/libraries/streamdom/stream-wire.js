@@ -53,8 +53,12 @@ class stream {
 
 		let models = {};
 		let compiled = {};
+		let response = null;
+		let timeStarted = performance.now();
 		let form = new FormData();
 		let properties = this.component.getAttribute('data-properties');
+
+		this.trigger({'status': false, 'response': response, 'duration': 0});
 
 		this.component.querySelectorAll(this.container).forEach(fragment => {
 			const comp = fragment.getAttribute("data-component");
@@ -104,12 +108,19 @@ class stream {
 						return true;
 					}
 				});
+
+				response = html;
 			} else {
 				console.warn("Updated component not found in response.");
 			}
 		})
 		.catch(error => {
 			console.error("Error submitting request:", error);
+		})
+		.finally(() => {
+			let timeEnded = performance.now();
+			let totalMs = timeEnded - timeStarted;
+			this.trigger({'status': true, 'response': response, 'duration': totalMs});
 		});
 	}
 
@@ -176,6 +187,14 @@ class stream {
 		return Array.from(final)
 			.filter(Boolean)
 			.map(str => str.split('.'));
+	}
+
+	ajax(callback) {
+		window.addEventListener('wire-loader', (event) => callback(event.detail))
+	}
+
+	trigger(data) {
+		window.dispatchEvent(new CustomEvent('wire-loader', {detail: data}))
 	}
 
 	static init(component) {
