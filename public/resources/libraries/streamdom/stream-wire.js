@@ -54,8 +54,8 @@ class stream {
 		let models = {};
 		let compiled = {};
 		let response = null;
-		let timeStarted = performance.now();
 		let form = new FormData();
+		let timeStarted = performance.now();
 		let properties = this.component.getAttribute('data-properties');
 
 		this.trigger({'status': false, 'response': response, 'duration': 0});
