@@ -8,9 +8,9 @@ class stream {
 			console.error("Component not found for identifier:", identifier);
 		}
 
-		this.identifier = identifier;
-		this.container = container;
 		this.component = component;
+		this.identifier = identifier;
+		this.container = 'fragment';
 		this.token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 	}
 
@@ -100,11 +100,9 @@ class stream {
 						return true;
 					}
 				});
-
 			} else {
 				console.warn("Updated component not found in response.");
 			}
-
 		})
 		.catch(error => {
 			console.error("Error submitting request:", error);
@@ -176,11 +174,11 @@ class stream {
 			.map(str => str.split('.'));
 	}
 
-	static init(component, container) {
-		load(new stream(component, container));
+	static init(component) {
+		load(new stream(component));
 	}
 }
 
-export function init(identifier, container = 'fragment') {
-	stream.init(identifier, container)
+export function init(identifier) {
+	stream.init(identifier)
 }
