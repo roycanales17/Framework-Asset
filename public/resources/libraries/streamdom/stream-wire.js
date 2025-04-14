@@ -26,20 +26,24 @@ class stream {
 				const fullDirective = directive + suffix;
 				const selector = this.escape(fullDirective);
 
-				this.component.querySelectorAll(selector).forEach(element =>
+				this.component.querySelectorAll(selector).forEach(element => {
 					this.perform({
 						element: element,
 						directive: fullDirective,
-						expression: element.getAttribute(fullDirective)
-					}, callback)
-				);
+						identifier: this.identifier,
+						expression: element.getAttribute(fullDirective),
+						fragment: this.component
+					}, callback);
+				});
 			});
 		} else {
 			this.component.querySelectorAll(baseSelector).forEach(element =>
 				this.perform({
 					element: element,
 					directive: directive,
-					expression: element.getAttribute(directive)
+					identifier: this.identifier,
+					expression: element.getAttribute(directive),
+					fragment: this.component
 				}, callback)
 			);
 		}
