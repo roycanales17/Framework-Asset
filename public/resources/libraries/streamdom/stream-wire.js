@@ -211,12 +211,22 @@ class stream {
 			.map(str => str.split('.'));
 	}
 
+	stringToIntId(str) {
+		let hash = 0;
+		for (let i = 0; i < str.length; i++) {
+			hash = (hash << 5) - hash + str.charCodeAt(i);
+			hash |= 0;
+		}
+
+		return Math.abs(hash);
+	}
+
 	ajax(callback) {
-		window.addEventListener('wire-loader', (event) => callback(event.detail))
+		window.addEventListener(`wire-loader-${this.stringToIntId(this.identifier)}`, (event) => callback(event.detail))
 	}
 
 	trigger(data) {
-		window.dispatchEvent(new CustomEvent('wire-loader', {detail: data}))
+		window.dispatchEvent(new CustomEvent(`wire-loader-${this.stringToIntId(this.identifier)}`, {detail: data}))
 	}
 
 	static init(component) {
