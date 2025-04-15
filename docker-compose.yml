@@ -1,0 +1,68 @@
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: app_container
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-80}:80"
+    volumes:
+      - ./:/var/www/html
+      - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    networks:
+      - project_network
+    environment:
+      VIRTUAL_HOST: ${APP_IP:-localhost}  # Optional, useful for reverse proxy setups
+      APP_ENV: ${APP_ENV:-local}  # Make sure the app environment is set (optional)
+      DB_HOST: mysql  # Connect to MySQL container by name
+      DB_PORT: ${DB_PORT:-3306}  # Ensure the port for DB connection is correct
+      DB_DATABASE: ${DB_DATABASE:-laravel}  # Laravel database name
+      DB_USERNAME: ${DB_USERNAME:-admin}  # Database user
+      DB_PASSWORD: ${DB_PASSWORD:-admin}  # Database password
+
+  mysql:
+    image: mysql:8
+    container_name: mysql_container
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+      MYSQL_USER: ${DB_USERNAME:-admin}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-admin}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - project_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin_container
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: ${DB_PORT:-3306}
+      PMA_USER: ${DB_USERNAME:-admin}
+      PMA_PASSWORD: ${DB_PASSWORD:-admin}
+    ports:
+      - "8080:80"
+    networks:
+      - project_network
+
+  memcached:
+    image: memcached:alpine
+    container_name: memcached_container
+    restart: unless-stopped
+    ports:
+      - "${MEMCACHE_PORT:-11211}:11211"
+    networks:
+      - project_network
+
+networks:
+  project_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
