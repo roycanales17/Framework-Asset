@@ -168,7 +168,7 @@ class stream {
 	}
 
 	getParamNames(func) {
-		const fnStr = func.toString().replace(/\/\/.*$|\/\*[\s\S]*?\*\//gm, ''); // remove comments
+		const fnStr = func.toString().replace(/\/\/.*$|\/\*[\s\S]*?\*\//gm, '');
 		const result = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(/([^\s,]+)/g);
 		return result === null ? [] : result;
 	}
