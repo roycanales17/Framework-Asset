@@ -4,22 +4,36 @@
 
 	return new class extends Component {
 
+		protected string $target = 'home-01';
 		public string $message = '';
 		public array $logs = [];
 
+		public function remove($index): void
+		{
+			unset($this->logs[$index]);
+			$this->logs = array_values($this->logs);
+		}
+
+		public function edit($index, $name): void
+		{
+			$this->logs[$index] = $name;
+		}
+
 		public function submit(): void
 		{
-			if ($this->message) {
+			if (!empty(trim($this->message))) {
 				$this->logs[] = $this->message;
 			}
 		}
 
 		public function render(): string
 		{
+			$subscribe = render('subscribe');
 			$hidden = empty(trim($this->message)) ? 'display-none' : '';
 
 			return <<<HTML
 			    <div class="flex flex-col gap-3 p-5 border border-gray-200">
+			    	<h2>Register</h2>
 			       <div class="flex flex-row gap-5 items-center"> 
 			       		<input type="text" class="input" placeholder="Type here..." 
 			       			wire:model="message" 
@@ -41,19 +55,15 @@
 			        	<li class="p-4 text-xs opacity-60 tracking-wide border-b border-gray-500">Submitted Logs:</li>
 			        	{$this->print(function() {
 							if ($this->logs) {
-								
 								echo '<li class="border-t border-gray-500 p-0"></li>';
-								$lists = implode("</li><li class='px-4 py-3 text-sm'>", $this->logs);
-								
-								echo <<<HTML
-								  <li class="px-4 py-3 text-sm">
-									$lists
-								  </li>
-								HTML;
+								foreach ($this->logs as $index => $message) {
+									echo render('logs', ['index' => $index, 'message' => $message]);
+								}
 							}
 						})} 
 			        </ul>
-			    <div/>
+			        $subscribe
+			    </div>
 			HTML;
 		}
 	};
