@@ -36,9 +36,9 @@ class stream {
 					this.perform({
 						element: element,
 						directive: fullDirective,
+						fragment: this.component,
 						identifier: this.identifier,
-						expression: element.getAttribute(fullDirective),
-						fragment: this.component
+						expression: element.getAttribute(fullDirective)
 					}, callback);
 				});
 			});
@@ -47,9 +47,9 @@ class stream {
 				this.perform({
 					element: element,
 					directive: directive,
+					fragment: this.component,
 					identifier: this.identifier,
-					expression: element.getAttribute(directive),
-					fragment: this.component
+					expression: element.getAttribute(directive)
 				}, callback)
 			);
 		}
