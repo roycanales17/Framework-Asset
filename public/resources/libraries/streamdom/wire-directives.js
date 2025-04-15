@@ -1,15 +1,20 @@
 export function load(stream)
 {
-	stream.wire('wire:model', function(directive) {
-		stream.payload(directive);
+	stream.wire('wire:model', function(directive, expression) {
+		stream.payload(directive, expression);
 	});
 
-	stream.wire('wire:click', function(element, expression, directive) {
+	stream.wire('wire:click', function(element, expression, directive, identifier) {
 		element.addEventListener('click', (e) => {
-			if (directive.includes('.prevent')) {
+			if (directive.includes('.prevent'))
 				e.preventDefault();
-			}
-			stream.submit({'_method': expression});
+
+			stream.findTheID(element, 'wire:target', function(target) {
+				if (target)
+					identifier = target;
+
+				stream.submit({'_method': expression}, identifier);
+			});
 		});
 	}, ['prevent']);
 
@@ -74,7 +79,7 @@ export function load(stream)
 		});
 	}, ['100ms', '300ms', '500ms', '1000ms', '1300ms', '1500ms', '2000ms', 'clear']);
 
-	stream.wire('wire:keydown.enter', function (element, expression, directive) {
+	stream.wire('wire:keydown.enter', function (element, expression, directive, identifier) {
 		element.addEventListener('keydown', (e) => {
 			let activeEl = document.activeElement;
 			let pressedKey = e.key.toLowerCase();
@@ -87,13 +92,18 @@ export function load(stream)
 				if (action.includes("event.target.value"))
 					action = action.replace("event.target.value", `'${element.value}'`);
 
-				stream.submit({'_method': action});
-				stream.ajax(({ status }) => {
-					if (status && directive.includes('.clear'))
-						element.value = '';
+				stream.findTheID(element, 'wire:target', function(target) {
+					if (target)
+						identifier = target;
 
-					if (activeEl === element)
-						element.focus();
+					stream.submit({'_method': action}, identifier);
+					stream.ajax(({ status }) => {
+						if (status && directive.includes('.clear'))
+							element.value = '';
+
+						if (activeEl === element)
+							element.focus();
+					});
 				});
 			}
 		});

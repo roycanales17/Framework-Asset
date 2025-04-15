@@ -51,14 +51,21 @@ class stream {
 		}
 	}
 
-	submit(payload) {
+	submit(payload, target) {
+
+		if (target) {
+			this.component = document.querySelector('[data-component="'+ target +'"]');
+			this.identifier = target;
+		}
 
 		let models = {};
 		let compiled = {};
 		let response = null;
 		let form = new FormData();
 		let timeStarted = performance.now();
+		let compiledComponents = this.getAllDataComponentElements(this.component);
 		let properties = this.component.getAttribute('data-properties');
+		let payloads = JSON.parse(this.component.getAttribute('data-payloads') || '{}');
 
 		this.trigger({'status': false, 'response': response, 'duration': 0});
 
@@ -67,11 +74,10 @@ class stream {
 			compiled[comp] = fragment.outerHTML;
 		});
 
-		for (let i = 0; i < this.payloads.length; i++) {
-			let directive = this.payloads[i];
-			this.getScopedElements(this.escape(directive)).forEach(element => {
-				const name = element.getAttribute(directive);
-				models[name] = element.value;
+		for (const [directive, values] of Object.entries(payloads)) {
+			values.forEach(name => {
+				const model = this.component.querySelector(`[${CSS.escape(directive)}='${name}']`);
+				models[name] = model.value;
 			});
 		}
 
@@ -108,6 +114,7 @@ class stream {
 					},
 					onBeforeNodeDiscarded: node => true
 				});
+
 				response = html;
 			} else {
 				console.warn("Updated component not found in response.");
@@ -119,15 +126,38 @@ class stream {
 		.finally(() => {
 			let timeEnded = performance.now();
 			let totalMs = timeEnded - timeStarted;
+
 			this.trigger({'status': true, 'response': response, 'duration': totalMs});
+			this.recompile(compiledComponents, response);
+
+			this.component.setAttribute('data-payloads', JSON.stringify(payloads))
 		});
 	}
 
-	payload(directive) {
-		if (!this.payloads)
-			this.payloads = [];
+	payload(directive, name) {
+		const el = this.component;
+		const currentPayloads = JSON.parse(el.getAttribute('data-payloads') || '{}');
 
-		this.payloads.push(directive);
+		if (currentPayloads[directive] === undefined)
+			currentPayloads[directive] = [];
+
+		currentPayloads[directive].push(name);
+		el.setAttribute('data-payloads', JSON.stringify(currentPayloads));
+	}
+
+	findTheID(element, search, callback) {
+		if (element.hasAttribute(search)) {
+			const targetID = element.getAttribute(search);
+			const targetElement = document.querySelector(`[data-id="${targetID}"]`);
+
+			if (targetElement && targetElement.hasAttribute('data-component')) {
+				const identifier = targetElement.getAttribute('data-component');
+				callback(identifier);
+				return;
+			}
+		}
+
+		callback(false);
 	}
 
 	escape(str) {
@@ -144,6 +174,35 @@ class stream {
 
 		action(...args);
 	}
+
+	recompile(compiled, updated) {
+		const parser = new DOMParser();
+		const doc = parser.parseFromString(updated, 'text/html');
+		const modified = doc.querySelectorAll('[data-component]');
+
+		const modifiedValues = Array.from(modified).map(el => el.getAttribute('data-component'));
+		const originalValues = Array.from(compiled).map(el => el.getAttribute('data-component'));
+
+		const unique = [
+			...modifiedValues.filter(val => !originalValues.includes(val)),
+			...originalValues.filter(val => !modifiedValues.includes(val))
+		];
+
+		unique.forEach(identifier => {
+			const isExist = document.querySelector('[data-component="'+ identifier +'"]');
+			if (isExist)
+				init(identifier);
+		});
+	}
+
+	getAllDataComponentElements(root) {
+		const elements = Array.from(root.querySelectorAll('[data-component]'));
+		if (root.hasAttribute('data-component')) {
+			elements.unshift(root);
+		}
+		return elements;
+	}
+
 
 	getScopedElements(selector) {
 		const root = this.component;
