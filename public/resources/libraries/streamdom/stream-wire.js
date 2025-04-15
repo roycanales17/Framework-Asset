@@ -154,6 +154,7 @@ class stream {
 		const root = this.component;
 		const excludeTag = this.container;
 		const elements = root.querySelectorAll(selector);
+
 		return Array.from(elements).filter(el => {
 			let current = el.parentElement;
 			while (current && current !== root) {
