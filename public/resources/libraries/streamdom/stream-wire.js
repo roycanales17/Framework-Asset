@@ -1,5 +1,11 @@
 import {load} from "./wire-directives.js";
 
+/**
+ *	## Todo:
+ *  1. `Allow to submit different component`
+ *	2. `Avoid nested fragment from wire directives`
+ */
+
 class stream {
 
 	constructor(identifier, container) {
@@ -26,7 +32,7 @@ class stream {
 				const fullDirective = directive + suffix;
 				const selector = this.escape(fullDirective);
 
-				this.component.querySelectorAll(selector).forEach(element => {
+				this.getScopedElements(selector).forEach(element => {
 					this.perform({
 						element: element,
 						directive: fullDirective,
@@ -37,7 +43,7 @@ class stream {
 				});
 			});
 		} else {
-			this.component.querySelectorAll(baseSelector).forEach(element =>
+			this.getScopedElements(baseSelector).forEach(element =>
 				this.perform({
 					element: element,
 					directive: directive,
@@ -144,6 +150,22 @@ class stream {
 		const args = paramNames.map(name => params[name]);
 
 		action(...args);
+	}
+
+	getScopedElements(selector) {
+		const root = this.component;
+		const excludeTag = this.container;
+		const elements = root.querySelectorAll(selector);
+		return Array.from(elements).filter(el => {
+			let current = el.parentElement;
+			while (current && current !== root) {
+				if (current.tagName.toLowerCase() === excludeTag.toLowerCase()) {
+					return false;
+				}
+				current = current.parentElement;
+			}
+			return true;
+		});
 	}
 
 	getParamNames(func) {
