@@ -106,9 +106,7 @@ class stream {
 
 						return true;
 					},
-					onBeforeNodeDiscarded: (node) => {
-						return true;
-					}
+					onBeforeNodeDiscarded: node => true
 				});
 				response = html;
 			} else {
