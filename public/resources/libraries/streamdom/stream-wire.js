@@ -1,10 +1,5 @@
 import {load} from "./wire-directives.js";
 
-/**
- *	## Todo:
- *  1. `Allow to submit different component`
- */
-
 class stream {
 
 	constructor(identifier) {
