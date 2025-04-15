@@ -7,7 +7,7 @@ import {load} from "./wire-directives.js";
 
 class stream {
 
-	constructor(identifier, container) {
+	constructor(identifier) {
 		const component = document.querySelector('[data-component="'+ identifier +'"]');
 		if (!component) {
 			console.error("Component not found for identifier:", identifier);
