@@ -24,7 +24,9 @@ class stream {
 
 		if (externals.length) {
 			this.wire(directive, callback);
-			const combinations = this.getCombinations(externals);
+
+			const matchedExternals = externals.filter(val => this.component.outerHTML.includes(val));
+			const combinations = this.getCombinationsOnly(matchedExternals);
 
 			combinations.forEach(mods => {
 				const suffix = mods.length ? '.' + mods.join('.') : '';
@@ -173,41 +175,18 @@ class stream {
 		return result === null ? [] : result;
 	}
 
-	getCombinations(array) {
+	getCombinationsOnly(array) {
 		const results = [];
 
 		const recurse = (prefix, rest) => {
-			results.push(prefix);
+			if (prefix.length > 0) results.push([...prefix]);
 			for (let i = 0; i < rest.length; i++) {
 				recurse([...prefix, rest[i]], rest.slice(i + 1));
 			}
 		};
 
 		recurse([], array);
-
-		const permute = (arr) => {
-			if (arr.length <= 1) return [arr];
-			let perms = [];
-			for (let i = 0; i < arr.length; i++) {
-				let rest = [...arr.slice(0, i), ...arr.slice(i + 1)];
-				for (let sub of permute(rest)) {
-					perms.push([arr[i], ...sub]);
-				}
-			}
-			return perms;
-		};
-
-		const final = new Set();
-		results.forEach(r => {
-			if (r.length > 0) {
-				permute(r).forEach(p => final.add(p.join('.')));
-			}
-		});
-		final.add('');
-
-		return Array.from(final)
-			.filter(Boolean)
-			.map(str => str.split('.'));
+		return results;
 	}
 
 	stringToIntId(str) {
