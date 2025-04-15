@@ -1,7 +1,7 @@
 export function load(stream)
 {
-	stream.wire('wire:model', function(directive, expression) {
-		stream.payload(directive, expression);
+	stream.wire('wire:model', function(directive) {
+		stream.payload(directive);
 	});
 
 	stream.wire('wire:click', function(element, expression, directive) {

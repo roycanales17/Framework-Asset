@@ -3,7 +3,6 @@ import {load} from "./wire-directives.js";
 /**
  *	## Todo:
  *  1. `Allow to submit different component`
- *	2. `Avoid nested fragment from wire directives`
  */
 
 class stream {
@@ -73,7 +72,7 @@ class stream {
 
 		for (let i = 0; i < this.payloads.length; i++) {
 			let directive = this.payloads[i];
-			this.component.querySelectorAll(this.escape(directive)).forEach(element => {
+			this.getScopedElements(this.escape(directive)).forEach(element => {
 				const name = element.getAttribute(directive);
 				models[name] = element.value;
 			});
@@ -114,7 +113,6 @@ class stream {
 						return true;
 					}
 				});
-
 				response = html;
 			} else {
 				console.warn("Updated component not found in response.");
