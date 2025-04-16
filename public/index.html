@@ -3,10 +3,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<meta property="og:title" content="{{ $g_page_title }}">
+	<meta property="og:description" content="{{ $g_page_description }}">
+	<meta property="og:url" content="{{ $g_page_url }}">
+	<meta name="twitter:card" content="summary_large_image">
 
 	<title>{{ $g_page_title }}</title>
-	<link rel="stylesheet" href="build/main.css" />
-	<link rel="stylesheet" href="build/utilities.css" />
 
 	<!-- Favicon and Icons -->
 	<link rel="icon" type="image/png" sizes="16x16" href="/resources/images/favicon-16x16.png">
@@ -16,11 +18,9 @@
 	<link rel="apple-touch-icon" href="/resources/images/apple-touch-icon.png">
 	<link rel="shortcut icon" href="favicon.ico">
 
-	<meta property="og:title" content="{{ $g_page_title }}">
-	<meta property="og:description" content="{{ $g_page_description }}">
-	<meta property="og:url" content="{{ $g_page_url }}">
-	<meta name="twitter:card" content="summary_large_image">
-
+	<!-- Utilities -->
+	<link rel="stylesheet" href="build/main.css" />
+	<link rel="stylesheet" href="build/utilities.css" />
 	<script type="module" src="resources/main.js"></script>
 </head>
 <body>
