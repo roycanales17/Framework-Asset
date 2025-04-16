@@ -52,15 +52,11 @@
 		Route::configure($route, [
 			'web.php'
 		])->captured(function (string $content, int $code) {
-
 			if ($code == 404)
 				return;
 
-			$template = file_exists($path = config('APP_PUBLIC') . '/index.html')
-				? file_get_contents($path)
-				: '';
-
-			Blade::eval(Blade::compile($template ?: $content), [
+			// Load the content with template
+			Blade::render('public/index.html', extract: [
 				'g_page_lang' => config('APP_LANGUAGE'),
 				'g_page_title' => config('APP_NAME'),
 				'g_page_url' => config('APP_URL'),

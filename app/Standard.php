@@ -4,12 +4,14 @@
 
 	function dump(mixed $data, bool $exit = false): void
 	{
-		$printed = print_r($data, true);
-		echo <<<HTML
-			<pre> 
-				$printed
-			</pre>
-		HTML;
+		if (config('DEVELOPMENT')) {
+			$printed = print_r($data, true);
+			echo <<<HTML
+				<pre> 
+					$printed
+				</pre>
+			HTML;
+		}
 
 		if ($exit) exit;
 	}
@@ -18,19 +20,16 @@
 	{
 		ob_start();
 
-		$root = rtrim(config('APP_ROOT'), '/') . '/views/';
-		$normalizedPath = trim($path, '/');
-		$normalizedPath = preg_replace('/\.php$/', '', $normalizedPath);
-		$fullPath = $root . $normalizedPath . '.php';
+		$root = rtrim(config('APP_ROOT'), '/');
+		$normalizedPath = preg_replace('/\.php$/', '', trim($path, '/'));
+		$mainPath = "/views/{$normalizedPath}.php";
+		$bladePath = str_replace('.php', '.blade.php', $mainPath);
 
-		if (file_exists($temp = str_replace('.php', '.blade.php', $fullPath)))
-			$fullPath = $temp;
-
-		if (file_exists($fullPath)) {
-
-			$compiled = Blade::compile(file_get_contents($fullPath));
-			Blade::eval($compiled, $data);
+		if (file_exists($root . $bladePath)) {
+			$mainPath = $bladePath;
 		}
+
+		Blade::render($mainPath, extract: $data);
 
 		return ob_get_clean();
 	}
