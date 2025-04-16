@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "roy404/blades",
-            "version": "v1.0.13",
+            "version": "v1.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roycanales17/Blades-Compiler.git",
-                "reference": "aad1debda8ce3e534b4924c9f4a7d30bb3c7016a"
+                "reference": "5de884fad08968fa6309df0ea35ad621443508a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roycanales17/Blades-Compiler/zipball/aad1debda8ce3e534b4924c9f4a7d30bb3c7016a",
-                "reference": "aad1debda8ce3e534b4924c9f4a7d30bb3c7016a",
+                "url": "https://api.github.com/repos/roycanales17/Blades-Compiler/zipball/5de884fad08968fa6309df0ea35ad621443508a1",
+                "reference": "5de884fad08968fa6309df0ea35ad621443508a1",
                 "shasum": ""
             },
             "require": {
@@ -46,9 +46,9 @@
             ],
             "support": {
                 "issues": "https://github.com/roycanales17/Blades-Compiler/issues",
-                "source": "https://github.com/roycanales17/Blades-Compiler/tree/v1.0.13"
+                "source": "https://github.com/roycanales17/Blades-Compiler/tree/v1.0.15"
             },
-            "time": "2025-01-19T13:06:30+00:00"
+            "time": "2025-04-16T13:54:24+00:00"
         },
         {
             "name": "roy404/request",
