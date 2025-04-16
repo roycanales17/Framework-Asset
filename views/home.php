@@ -2,6 +2,9 @@
 
 	use App\Utilities\Component;
 
+	use Components\Subscribe;
+	use Components\Log;
+
 	return new class extends Component {
 
 		protected string $target = 'home-01';
@@ -28,7 +31,7 @@
 
 		public function render(): string
 		{
-			$subscribe = render('subscribe');
+			$subscribe = render(Subscribe::class);
 			$hidden = empty(trim($this->message)) ? 'display-none' : '';
 
 			return <<<HTML
@@ -57,7 +60,7 @@
 							if ($this->logs) {
 								echo '<li class="border-t border-gray-500 p-0"></li>';
 								foreach ($this->logs as $index => $message) {
-									echo render('logs', ['index' => $index, 'message' => $message]);
+									echo render(Log::class, ['index' => $index, 'message' => $message]);
 								}
 							}
 						})} 

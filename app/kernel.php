@@ -18,7 +18,7 @@
 		Config::load('../.env');
 
 		// Set the root directory for views
-		Stream::config('../views/');
+		Stream::load('../views/');
 
 		// Start session
 		Session::start();
