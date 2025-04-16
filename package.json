@@ -5,11 +5,12 @@
   "main": "index.html",
   "scripts": {
     "build": "npm run build:sass && npm run build:tailwind",
-    "watch": "concurrently \"npm run watch:sass\" \"npm run watch:tailwind\"",
+    "watch": "concurrently \"npm run watch:sass\" \"npm run watch:tailwind\" \"npm run browser-sync\"",
     "build:sass": "sass public/resources/main.scss public/build/main.css",
     "build:tailwind": "npx @tailwindcss/cli -i public/resources/utilities.css -o public/build/utilities.css",
     "watch:sass": "sass --watch public/resources/main.scss:public/build/main.css",
-    "watch:tailwind": "npx @tailwindcss/cli -w -i public/resources/utilities.css -o public/build/utilities.css"
+    "watch:tailwind": "npx @tailwindcss/cli -w -i public/resources/utilities.css -o public/build/utilities.css",
+    "browser-sync": "browser-sync serve --proxy 'http://localhost:8000' --files '*.{php,js,css}' 'public/build/*.css' 'public/**/*.js' --no-open --no-ui"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
+    "browser-sync": "^3.0.4",
     "concurrently": "^8.2.2",
     "daisyui": "^5.0.19",
     "postcss": "^8.5.3",
