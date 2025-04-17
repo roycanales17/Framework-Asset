@@ -191,7 +191,27 @@ class stream {
 		unique.forEach(identifier => {
 			const isExist = document.querySelector('[data-component="'+ identifier +'"]');
 			if (isExist)
-				init(identifier);
+				this.executeScriptsIn(isExist);
+		});
+	}
+
+	executeScriptsIn(container) {
+		const scripts = container.querySelectorAll('script');
+
+		scripts.forEach(script => {
+			const newScript = document.createElement('script');
+
+			if (script.src) {
+				newScript.src = script.src;
+			} else {
+				newScript.textContent = script.textContent;
+			}
+
+			Array.from(script.attributes).forEach(attr => {
+				newScript.setAttribute(attr.name, attr.value);
+			});
+
+			script.parentNode.replaceChild(newScript, script);
 		});
 	}
 
