@@ -53,43 +53,56 @@ class stream {
 
 	submit(payload, target) {
 
+		const previousIdentifier = this.identifier;
+
+		// Update target component and identifier if provided
 		if (target) {
 			this.component = document.querySelector('[data-component="'+ target +'"]');
 			this.identifier = target;
 		}
 
-		let models = {};
-		let compiled = {};
 		let response = null;
-		let form = new FormData();
-		let timeStarted = performance.now();
+		const models = {};
+		const compiled = {};
+		const form = new FormData();
+		const timeStarted = performance.now();
+
 		let compiledComponents = this.getAllDataComponentElements(this.component);
 		let properties = this.component.getAttribute('data-properties');
 		let payloads = JSON.parse(this.component.getAttribute('data-payloads') || '{}');
 
-		this.trigger({'status': false, 'response': response, 'duration': 0});
+		// Initial trigger(s)
+		if (target) {
+			this.trigger({ status: false, response, duration: 0 }, previousIdentifier);
+		}
+		this.trigger({ status: false, response, duration: 0 });
 
+		// Capture compiled fragments
 		this.component.querySelectorAll(this.container).forEach(fragment => {
 			const comp = fragment.getAttribute("data-component");
 			compiled[comp] = fragment.outerHTML;
 		});
 
-		for (const [directive, values] of Object.entries(payloads)) {
-			values.forEach(name => {
+		// Collect models from payloads
+		for (const [directive, names] of Object.entries(payloads)) {
+			names.forEach(name => {
 				const model = this.component.querySelector(`[${CSS.escape(directive)}='${name}']`);
 				models[name] = model.value;
 			});
 		}
 
-		Object.entries(payload).forEach(([key, value]) => {
+		// Append payload to FormData
+		for (const [key, value] of Object.entries(payload)) {
 			form.append(key, value);
-		});
+		}
 
+		// Append meta info to FormData
 		form.append('_component', this.identifier);
 		form.append('_properties', properties);
 		form.append('_models', JSON.stringify(models));
 		form.append('_compiled', JSON.stringify(compiled));
 
+		// Submit via fetch
 		fetch(`/api/stream-wire/${this.identifier}`, {
 			method: "POST",
 			headers: {
@@ -126,6 +139,9 @@ class stream {
 		.finally(() => {
 			let timeEnded = performance.now();
 			let totalMs = timeEnded - timeStarted;
+
+			if (target)
+				this.trigger({'status': true, 'response': response, 'duration': totalMs}, previousIdentifier);
 
 			this.trigger({'status': true, 'response': response, 'duration': totalMs});
 			this.recompile(compiledComponents, response);
@@ -274,12 +290,20 @@ class stream {
 		return Math.abs(hash);
 	}
 
-	ajax(callback) {
-		window.addEventListener(`wire-loader-${this.stringToIntId(this.identifier)}`, (event) => callback(event.detail))
+	ajax(callback, identifier = '') {
+		let target = this.identifier;
+		if (identifier)
+			target = identifier;
+
+		window.addEventListener(`wire-loader-${this.stringToIntId(target)}`, (event) => callback(event.detail))
 	}
 
-	trigger(data) {
-		window.dispatchEvent(new CustomEvent(`wire-loader-${this.stringToIntId(this.identifier)}`, {detail: data}))
+	trigger(data, identifier = '') {
+		let target = this.identifier;
+		if (identifier)
+			target = identifier;
+
+		window.dispatchEvent(new CustomEvent(`wire-loader-${this.stringToIntId(target)}`, {detail: data}))
 	}
 
 	static init(component) {
