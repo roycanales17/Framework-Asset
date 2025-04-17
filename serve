@@ -26,7 +26,6 @@
 
 	while (true) {
 		$input = trim(fgets(STDIN));
-		echo 'adasd';
 
 		if ($input === 'exit') {
 			echo "Stopping processes...\n";
