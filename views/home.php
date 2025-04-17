@@ -36,8 +36,8 @@
 
 			return <<<HTML
 			    <div class="flex flex-col gap-3 p-5 border border-gray-200">
-			    	<h2>Register</h2>
-			       <div class="flex flex-row gap-5 items-center"> 
+			    	<h2 class="font-bold">Register</h2>
+			       	<div class="flex flex-row gap-5 items-center"> 
 			       		<input type="text" class="input" placeholder="Type here..." 
 			       			wire:model="message" 
 			       			wire:keydown.enter.clear.prevent="submit" 
@@ -53,7 +53,7 @@
 			        		wire:loader.classList.add='hidden'>
 			        		You Entered: <b>{$this->message}</b>
 			        	</label>
-			       </div>
+			       	</div>
 			        <ul class="bg-base-100 rounded-sm shadow-md border border-gray-600"> 
 			        	<li class="p-4 text-xs opacity-60 tracking-wide border-b border-gray-500">Submitted Logs:</li>
 			        	{$this->print(function() {
