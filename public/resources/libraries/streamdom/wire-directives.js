@@ -81,6 +81,7 @@ export function load(stream)
 
 	stream.wire('wire:keydown.enter', function (element, expression, directive, identifier) {
 		element.addEventListener('keydown', (e) => {
+			let hasTarget = element.getAttribute('wire:target');
 			let activeEl = document.activeElement;
 			let pressedKey = e.key.toLowerCase();
 			let action = expression;
@@ -101,8 +102,16 @@ export function load(stream)
 						if (status && directive.includes('.clear'))
 							element.value = '';
 
-						if (activeEl === element)
-							element.focus();
+						if (hasTarget) {
+							const escapedAttr = stream.escape(directive, true);
+							const selector = `${escapedAttr}="${expression}"`;
+							const newEl = document.querySelector(`[${selector}]`);
+							if (status && newEl)
+								newEl.focus();
+						} else {
+							if (activeEl === element)
+								element.focus();
+						}
 					});
 				});
 			}
