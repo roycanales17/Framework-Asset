@@ -27,7 +27,7 @@ export function load(stream)
 		});
 	}, ['prevent']);
 
-	stream.wire('wire:keydown.keypress', function (element, expression, directive) {
+	stream.wire('wire:keydown.keypress', function (element, expression, directive, identifier) {
 		let debounceTimer = null;
 
 		element.addEventListener('input', (e) => {
@@ -52,29 +52,36 @@ export function load(stream)
 			};
 
 			const matchedDelay = Object.keys(delays).find(key => directive.includes(key));
+			const perform = () => {
+				stream.findTheID(element, 'wire:target', function(target) {
+					if (target)
+						identifier = target;
 
-			if (matchedDelay) {
-				debounceTimer = setTimeout(() => {
-					stream.submit({ '_method': action });
+					stream.submit({ '_method': action }, identifier);
 					stream.ajax((res) => {
-						if (directive.includes('.clear'))
-							element.value = '';
+						const hasTarget = element.getAttribute('wire:target');
+						if (directive.includes('.clear')) element.value = '';
 
-						if (res.status && activeEl === element && res.duration >= 1000) {
-							element.focus();
+						if (res.status && res.duration >= 1000 && !hasTarget) {
+							if (activeEl === element) element.focus();
+							return;
+						}
+
+						if (res.status) {
+							const escapedAttr = stream.escape(directive, true);
+							const selector = `${escapedAttr}="${expression}"`;
+							const newEl = document.querySelector(`[${selector}]`);
+							if (newEl)
+								newEl.focus();
 						}
 					});
-				}, delays[matchedDelay]);
-			} else {
-				stream.submit({ '_method': action });
-				stream.ajax((res) => {
-					if (directive.includes('.clear'))
-						element.value = '';
-
-					if (res.status && activeEl === element && res.duration >= 1000) {
-						element.focus();
-					}
 				});
+			};
+
+			if (matchedDelay) {
+				debounceTimer = setTimeout(() => perform(), delays[matchedDelay]);
+			} else {
+				perform()
 			}
 		});
 	}, ['100ms', '300ms', '500ms', '1000ms', '1300ms', '1500ms', '2000ms', 'clear']);
