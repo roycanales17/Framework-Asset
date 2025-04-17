@@ -160,10 +160,13 @@ class stream {
 		callback(false);
 	}
 
-	escape(str) {
+	escape(str, skipBracket = false) {
 		const escaped = str
 			.replace(/:/g, '\\:')
 			.replace(/\./g, '\\.');
+
+		if (skipBracket)
+			return escaped;
 
 		return `[${escaped}]`;
 	}
