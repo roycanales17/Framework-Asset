@@ -7,6 +7,50 @@
     "content-hash": "190bc82cacab78177a7cc0f9215a28b3",
     "packages": [
         {
+            "name": "roy404/artisan",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/roycanales17/Web-Artisan.git",
+                "reference": "ade11d62d95ee337d026f16e0d20fe0a4cad9cad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/roycanales17/Web-Artisan/zipball/ade11d62d95ee337d026f16e0d20fe0a4cad9cad",
+                "reference": "ade11d62d95ee337d026f16e0d20fe0a4cad9cad",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "App\\Console\\": "src/",
+                    "App\\Console\\Commands\\": "commands/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robroy B Canales",
+                    "email": "canales.robroy123@gmail.com"
+                }
+            ],
+            "keywords": [
+                "console",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/roycanales17/Web-Artisan/issues",
+                "source": "https://github.com/roycanales17/Web-Artisan/tree/v1.0.5"
+            },
+            "time": "2025-04-18T14:11:58+00:00"
+        },
+        {
             "name": "roy404/blades",
             "version": "v1.0.15",
             "source": {
@@ -150,20 +194,21 @@
         },
         {
             "name": "roy404/utilities",
-            "version": "v1.1.10",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roycanales17/Web-Utilities.git",
-                "reference": "685468ab4034910a723807b32b149c2aa3b86917"
+                "reference": "2a43eb7f105d91df0391d5e765cd2334bf9926fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/685468ab4034910a723807b32b149c2aa3b86917",
-                "reference": "685468ab4034910a723807b32b149c2aa3b86917",
+                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/2a43eb7f105d91df0391d5e765cd2334bf9926fd",
+                "reference": "2a43eb7f105d91df0391d5e765cd2334bf9926fd",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.0",
+                "roy404/artisan": "^1.0",
                 "roy404/request": "^3.0"
             },
             "type": "library",
@@ -194,9 +239,9 @@
             ],
             "support": {
                 "issues": "https://github.com/roycanales17/Web-Utilities/issues",
-                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.1.10"
+                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.2.2"
             },
-            "time": "2025-04-16T09:01:34+00:00"
+            "time": "2025-04-18T14:15:19+00:00"
         }
     ],
     "packages-dev": [],
