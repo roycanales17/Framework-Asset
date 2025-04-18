@@ -6,12 +6,6 @@ Install the bundle using Composer:
 composer create-project roy404/framework project-name
 ```
 
-Install the bundle by using git link: (Make sure to create your own directory)
-
-```
-git clone --depth=1 git@github.com:roycanales17/framework.git .
-```
-
 # DOCUMENTATION
 
 The PHP framework is a custom-built solution aimed at enhancing code organization and promoting best practices in Object-Oriented Programming (OOPS) for PHP development. It offers a set of tools and features designed to streamline the development process and improve code maintainability.
