@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "roy404/artisan",
-            "version": "v1.0.8",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roycanales17/Web-Artisan.git",
-                "reference": "23ec83e414c3f674758993e77dc2e70dd12cf0a8"
+                "reference": "9ff26b04ae08943375722e0406f7d3821b564353"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roycanales17/Web-Artisan/zipball/23ec83e414c3f674758993e77dc2e70dd12cf0a8",
-                "reference": "23ec83e414c3f674758993e77dc2e70dd12cf0a8",
+                "url": "https://api.github.com/repos/roycanales17/Web-Artisan/zipball/9ff26b04ae08943375722e0406f7d3821b564353",
+                "reference": "9ff26b04ae08943375722e0406f7d3821b564353",
                 "shasum": ""
             },
             "require": {
@@ -40,15 +40,16 @@
                     "email": "canales.robroy123@gmail.com"
                 }
             ],
+            "description": "A custom Artisan-like command runner for web environments. Run your Laravel-style Artisan commands from the browser or other interfaces.",
             "keywords": [
                 "console",
                 "php"
             ],
             "support": {
                 "issues": "https://github.com/roycanales17/Web-Artisan/issues",
-                "source": "https://github.com/roycanales17/Web-Artisan/tree/v1.0.8"
+                "source": "https://github.com/roycanales17/Web-Artisan/tree/v1.1.1"
             },
-            "time": "2025-04-18T15:50:10+00:00"
+            "time": "2025-04-19T09:22:44+00:00"
         },
         {
             "name": "roy404/blades",
@@ -238,16 +239,16 @@
         },
         {
             "name": "roy404/utilities",
-            "version": "v1.2.6",
+            "version": "v1.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roycanales17/Web-Utilities.git",
-                "reference": "18e58fdaf925eaeca394b5d39b421c7cfb61e91f"
+                "reference": "4a141ef8cf0842d676ca46ca01e918f20a3b87f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/18e58fdaf925eaeca394b5d39b421c7cfb61e91f",
-                "reference": "18e58fdaf925eaeca394b5d39b421c7cfb61e91f",
+                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/4a141ef8cf0842d676ca46ca01e918f20a3b87f4",
+                "reference": "4a141ef8cf0842d676ca46ca01e918f20a3b87f4",
                 "shasum": ""
             },
             "require": {
@@ -285,9 +286,9 @@
             ],
             "support": {
                 "issues": "https://github.com/roycanales17/Web-Utilities/issues",
-                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.2.6"
+                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.2.7"
             },
-            "time": "2025-04-19T03:23:40+00:00"
+            "time": "2025-04-19T07:05:38+00:00"
         }
     ],
     "packages-dev": [],
