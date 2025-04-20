@@ -1,21 +1,69 @@
 <?php
 
 return [
-	'environment' => '../.env',
-	'stream' => '../views/',
 
+	/*
+	|--------------------------------------------------------------------------
+	| Global Environment File Path
+	|--------------------------------------------------------------------------
+	|
+	| Defines the location of the environment configuration file (`.env`)
+	| which is essential for loading application-specific environment variables.
+	|
+	*/
+	'environment' => '../.env',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Stream Wire Path
+	|--------------------------------------------------------------------------
+	|
+	| Specifies the path to locate view files used for Stream Wire components.
+	| This allows rendering components via file path instead of class names.
+	|
+	*/
+	'stream' => ['../views/'],
+
+	/*
+	|--------------------------------------------------------------------------
+	| Caching Configuration
+	|--------------------------------------------------------------------------
+	|
+	| Configuration options for connecting to a Memcache server.
+	| Adjust the 'enabled' flag to toggle caching features.
+	|
+	*/
 	'cache' => [
 		'server' => config('MEMCACHE_SERVER_NAME'),
 		'port' => config('MEMCACHE_PORT'),
 		'enabled' => false
 	],
+
+	/*
+	|--------------------------------------------------------------------------
+	| Route Configuration
+	|--------------------------------------------------------------------------
+	|
+	| Define route-specific settings and content capturing behaviors for both
+	| web and API routes. These handlers can be used for templating or raw output.
+	|
+	*/
 	'routes' => [
+
+		/*
+		|--------------------------------------------------------------------------
+		| Default Web Routes Configuration
+		|--------------------------------------------------------------------------
+		|
+		| Handles rendering of content responses. If the HTTP status code is 404,
+		| the capture will be skipped. Otherwise, content will be injected into
+		| the specified Blade template.
+		|
+		*/
 		'web' => [
 			'captured' => function (string $content, int $code) {
-				if ($code == 404)
-					return;
+				if ($code == 404) return;
 
-				// Load the content with template
 				App\Content\Blade::render('public/index.html', extract: [
 					'g_page_lang' => config('APP_LANGUAGE'),
 					'g_page_title' => config('APP_NAME'),
@@ -25,10 +73,17 @@ return [
 				]);
 			}
 		],
+
+		/*
+		|--------------------------------------------------------------------------
+		| API Routes Configuration
+		|--------------------------------------------------------------------------
+		|
+		| Handles raw output of captured API content.
+		|
+		*/
 		'api' => [
-			'routes' => [
-				'api.php'
-			],
+			'routes' => ['api.php'],
 			'prefix' => 'api',
 			'captured' => function (string $content) {
 				echo($content);
