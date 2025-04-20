@@ -1,5 +1,10 @@
 services:
   app:
+    depends_on:
+      - mysql
+      - memcached
+      - mailhog
+      - redis
     build:
       context: ./
       dockerfile: Dockerfile
@@ -10,6 +15,7 @@ services:
     volumes:
       - ./:/var/www/html
       - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./logs:/var/log/app
     networks:
       - project_network
     environment:
@@ -20,6 +26,11 @@ services:
       DB_DATABASE: ${DB_DATABASE:-framework}
       DB_USERNAME: ${DB_USER:-admin}
       DB_PASSWORD: ${DB_PASSWORD:-admin}
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+      CACHE_DRIVER: redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
 
   mysql:
     image: mysql:8
@@ -36,6 +47,11 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - project_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -57,6 +73,25 @@ services:
     restart: unless-stopped
     ports:
       - "${MEMCACHE_PORT:-11211}:11211"
+    networks:
+      - project_network
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - project_network
+
+  redis:
+    image: redis:alpine
+    container_name: ${REDIS_SERVER_NAME:-redis_container}
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
     networks:
       - project_network
 
