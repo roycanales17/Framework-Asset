@@ -1,7 +1,6 @@
 <?php
 
 	use App\Routes\Route;
-	use App\Content\Blade;
 	use App\Headers\Request;
 
 	use App\Utilities\Stream;
@@ -14,11 +13,14 @@
 
 	Application::run(function () {
 
+		// Load the default configurations
+		$conf = require 'Config.php';
+
 		// Load environment variables
-		Config::load('../.env');
+		Config::load($conf['environment']);
 
 		// Set the root directory for views
-		Stream::load('../views/');
+		Stream::load($conf['stream']);
 
 		// Start session
 		Session::start();
@@ -38,39 +40,21 @@
 		define('CSRF_TOKEN', csrf_token());
 
 		// Validate CSRF Token
-		if (!in_array(Request::method(), ['GET', 'HEAD', 'OPTIONS']) && request()->header('X-CSRF-TOKEN') !== Session::get('csrf_token')) {
+		if (!in_array(Request::method(), ['GET', 'HEAD', 'OPTIONS']) && request()->header('X-CSRF-TOKEN') !== Session::get('csrf_token'))
 			exit(response(['message' => 'Bad Request'], 400)->json());
-		}
 
 		// Configure cache
-		Cache::configure('', '');
+		if (($conf['cache'] ?? false) && ($conf['cache']['enabled'] ?? false))
+			Cache::configure($conf['cache']['server'], $conf['cache']['port']);
 
-		// Route path
-		$route = config('APP_ROOT')."/routes";
-
-		// Configure web routes
-		Route::configure($route, [
-			'web.php'
-		])->captured(function (string $content, int $code) {
-			if ($code == 404)
-				return;
-
-			// Load the content with template
-			Blade::render('public/index.html', extract: [
-				'g_page_lang' => config('APP_LANGUAGE'),
-				'g_page_title' => config('APP_NAME'),
-				'g_page_url' => config('APP_URL'),
-				'g_page_description' => "Page description here",
-				'g_page_content' => $content
-			]);
-		});
-
-		// Configure API routes
-		Route::configure($route, [
-			'api.php'
-		], 'api')->captured(function (string $content) {
-			echo($content);
-		});
+		// Configure Routes
+		foreach ($conf['routes'] ?? [] as $key => $route) {
+			Route::configure(
+				$route['root'] ?? "../routes",
+				$route['routes'] ?? ['web.php'],
+				$route['prefix'] ?? ''
+			)->captured($route['captured']);
+		}
 
 	})->failed(function (Exception|Error $exception) {
 		$logger = new Logger('../logs', logFile: 'error.log');

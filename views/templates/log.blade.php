@@ -1,8 +1,6 @@
 <li class="px-4 py-3 text-sm flex flex-col gap-2 border-b">
 	<div class="flex justify-between items-center">
-		<span class="text-gray-800 dark:text-gray-200 font-bold">
-			{{ $message }}
-		</span>
+		<span class="text-gray-800 dark:text-gray-200 font-bold">{{ $message }}</span>
 		<button
 			class="btn btn-error btn-xs"
 			wire:target="home-01"
