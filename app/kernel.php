@@ -13,14 +13,11 @@
 
 	Application::run(function () {
 
-		// Load the default configurations
-		$conf = require 'Config.php';
-
 		// Load environment variables
-		Config::load($conf['environment']);
+		Config::load('../.env');
 
 		// Set the root directory for views
-		Stream::load($conf['stream']);
+		Stream::load(($conf = require 'Config.php')['stream']);
 
 		// Start session
 		Session::start();
