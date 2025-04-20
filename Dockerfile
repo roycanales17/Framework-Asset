@@ -25,24 +25,14 @@ RUN docker-php-ext-install -j$(nproc) mysqli pdo pdo_mysql bcmath bz2 calendar c
 
 # Install PECL extensions
 RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 RUN pecl install igbinary \
     && docker-php-ext-enable igbinary
 
-RUN pecl install msgpack \
-    && docker-php-ext-enable msgpack
-
-RUN pecl install mcrypt \
-    && docker-php-ext-enable mcrypt
-
 # Memcached extension
 RUN pecl install memcached --with-libmemcached-dir=/usr \
     && docker-php-ext-enable memcached
-
-# SSH2 extension
-RUN pecl install ssh2 \
-    && docker-php-ext-enable ssh2
 
 # Clean up
 RUN docker-php-source delete

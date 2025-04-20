@@ -4,17 +4,6 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Global Environment File Path
-	|--------------------------------------------------------------------------
-	|
-	| Defines the location of the environment configuration file (`.env`)
-	| which is essential for loading application-specific environment variables.
-	|
-	*/
-	'environment' => '../.env',
-
-	/*
-	|--------------------------------------------------------------------------
 	| Stream Wire Path
 	|--------------------------------------------------------------------------
 	|
@@ -34,9 +23,9 @@ return [
 	|
 	*/
 	'cache' => [
-		'server' => config('MEMCACHE_SERVER_NAME'),
-		'port' => config('MEMCACHE_PORT'),
-		'enabled' => false
+		'server' => config('MEMCACHE_SERVER_NAME', 'localhost'),
+		'port' => config('MEMCACHE_PORT', '11211'),
+		'enabled' => true
 	],
 
 	/*

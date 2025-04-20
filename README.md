@@ -24,3 +24,8 @@ The PHP framework is a custom-built solution aimed at enhancing code organizatio
 ## Purpose and Benefits:
 
 The framework aims to improve code organization, maintainability, and scalability of PHP projects by enforcing best practices in OOPS and providing a set of tools to streamline development tasks. It encourages developers to write clean, modular, and reusable code, leading to more robust and maintainable applications.
+
+Run the docker image
+```docker
+docker-compose up --build -d
+```
