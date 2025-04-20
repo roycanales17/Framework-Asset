@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   app:
     build:
@@ -13,25 +15,25 @@ services:
     networks:
       - project_network
     environment:
-      VIRTUAL_HOST: ${APP_IP:-localhost}  # Optional, useful for reverse proxy setups
-      APP_ENV: ${APP_ENV:-local}  # Make sure the app environment is set (optional)
-      DB_HOST: mysql  # Connect to MySQL container by name
-      DB_PORT: ${DB_PORT:-3306}  # Ensure the port for DB connection is correct
-      DB_DATABASE: ${DB_DATABASE:-laravel}  # Laravel database name
-      DB_USERNAME: ${DB_USERNAME:-admin}  # Database user
-      DB_PASSWORD: ${DB_PASSWORD:-admin}  # Database password
+      VIRTUAL_HOST: ${APP_IP:-localhost}
+      APP_ENV: ${APP_ENV:-local}
+      DB_HOST: mysql
+      DB_PORT: ${DB_PORT:-3306}
+      DB_DATABASE: ${DB_DATABASE:-framework}
+      DB_USERNAME: ${DB_USER:-admin}
+      DB_PASSWORD: ${DB_PASSWORD:-admin}
 
   mysql:
     image: mysql:8
-    container_name: mysql_container
+    container_name: ${DB_HOST:-mysql}
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
-      MYSQL_USER: ${DB_USERNAME:-admin}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-admin}
+      MYSQL_DATABASE: ${DB_DATABASE:-framework}
+      MYSQL_USER: ${DB_USER:-admin}
       MYSQL_PASSWORD: ${DB_PASSWORD:-admin}
     ports:
-      - "3306:3306"
+      - "${DB_PORT:-3306}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
@@ -39,21 +41,21 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin_container
+    container_name: ${PMA_CONTAINER_NAME:-phpmyadmin_container}
     restart: unless-stopped
     environment:
       PMA_HOST: mysql
       PMA_PORT: ${DB_PORT:-3306}
-      PMA_USER: ${DB_USERNAME:-admin}
+      PMA_USER: ${DB_USER:-admin}
       PMA_PASSWORD: ${DB_PASSWORD:-admin}
     ports:
-      - "8080:80"
+      - "${PMA_PORT:-8080}:80"
     networks:
       - project_network
 
   memcached:
     image: memcached:alpine
-    container_name: memcached_container
+    container_name: ${MEMCACHE_SERVER_NAME:-memcached_container}
     restart: unless-stopped
     ports:
       - "${MEMCACHE_PORT:-11211}:11211"
