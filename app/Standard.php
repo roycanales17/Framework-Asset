@@ -1,6 +1,8 @@
 <?php
 
 	use App\Content\Blade;
+	use App\Headers\Request;
+	use App\Utilities\Session;
 
 	function dump(mixed $data, bool $exit = false): void
 	{
@@ -32,4 +34,10 @@
 		Blade::render($mainPath, extract: $data);
 
 		return ob_get_clean();
+	}
+
+	function validate_token(): void
+	{
+		if (!in_array(Request::method(), ['GET', 'HEAD', 'OPTIONS']) && request()->header('X-CSRF-TOKEN') !== Session::get('csrf_token'))
+			exit(response(['message' => 'Bad Request'], 400)->json());
 	}

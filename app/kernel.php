@@ -37,15 +37,13 @@
 		define('CSRF_TOKEN', csrf_token());
 
 		// Validate CSRF Token
-		if (!in_array(Request::method(), ['GET', 'HEAD', 'OPTIONS']) && request()->header('X-CSRF-TOKEN') !== Session::get('csrf_token'))
-			exit(response(['message' => 'Bad Request'], 400)->json());
+		validate_token();
 
 		// Configure cache
-		if (($conf['cache'] ?? false) && ($conf['cache']['enabled'] ?? false))
-			Cache::configure($conf['cache']['server'], $conf['cache']['port']);
+		Cache::configure($conf['cache']['server'], $conf['cache']['port']);
 
 		// Configure Routes
-		foreach ($conf['routes'] ?? [] as $key => $route) {
+		foreach ($conf['routes'] ?? [] as $route) {
 			Route::configure(
 				$route['root'] ?? "../routes",
 				$route['routes'] ?? ['web.php'],

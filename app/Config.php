@@ -24,8 +24,7 @@ return [
 	*/
 	'cache' => [
 		'server' => config('MEMCACHE_SERVER_NAME', 'localhost'),
-		'port' => config('MEMCACHE_PORT', '11211'),
-		'enabled' => true
+		'port' => config('MEMCACHE_PORT', '11211')
 	],
 
 	/*
