@@ -1,6 +1,8 @@
 <?php
 
-return [
+	use App\Utilities\Blueprints\CacheDriver;
+
+	return [
 
 	/*
 	|--------------------------------------------------------------------------
@@ -15,16 +17,38 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Caching Configuration
+	| Cache Configuration
 	|--------------------------------------------------------------------------
 	|
-	| Configuration options for connecting to a Memcache server.
-	| Adjust the 'enabled' flag to toggle caching features.
+	| Define the caching system used throughout the application.
+	| Set the 'driver' key to either 'redis' or 'memcached' to
+	| specify the default cache engine.
+	|
+	| Each cache driver supports its own server configuration:
+	| - 'server': Hostname or IP of the cache server
+	| - 'port': Port the cache service is listening on
+	|
+	| You can toggle or configure these settings based on your
+	| infrastructure and caching preferences.
 	|
 	*/
 	'cache' => [
-		'server' => config('MEMCACHE_SERVER_NAME', 'localhost'),
-		'port' => config('MEMCACHE_PORT', '11211')
+		// The default cache driver to use: 'redis' or 'memcached'
+		'driver' => 'redis',
+
+		// Redis configuration
+		'redis' => [
+			'driver' => CacheDriver::Redis,
+			'server' => config('REDIS_SERVER_NAME', 'redis'),
+			'port' => config('REDIS_PORT', '6379')
+		],
+
+		// Memcached configuration
+		'memcached' => [
+			'driver' => CacheDriver::Memcached,
+			'server' => config('MEMCACHE_SERVER_NAME', 'memcached'),
+			'port' => config('MEMCACHE_PORT', '11211')
+		]
 	],
 
 	/*
