@@ -239,28 +239,29 @@
         },
         {
             "name": "roy404/utilities",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roycanales17/Web-Utilities.git",
-                "reference": "d5ff7fa939d3f7dea19a66b2cfade26ea64095c3"
+                "reference": "48d37e7d786f9bdd8b8603decf39986f04cda72e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/d5ff7fa939d3f7dea19a66b2cfade26ea64095c3",
-                "reference": "d5ff7fa939d3f7dea19a66b2cfade26ea64095c3",
+                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/48d37e7d786f9bdd8b8603decf39986f04cda72e",
+                "reference": "48d37e7d786f9bdd8b8603decf39986f04cda72e",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.1",
                 "roy404/artisan": "^1.0",
+                "roy404/blades": "^1.0",
                 "roy404/eloquent": "^1.0",
                 "roy404/request": "^3.0"
             },
             "type": "library",
             "autoload": {
                 "files": [
-                    "src/Standard.php"
+                    "Standard.php"
                 ],
                 "psr-4": {
                     "App\\Http\\": "http",
@@ -284,9 +285,9 @@
             ],
             "support": {
                 "issues": "https://github.com/roycanales17/Web-Utilities/issues",
-                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.4.1"
+                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.4.2"
             },
-            "time": "2025-04-21T12:00:05+00:00"
+            "time": "2025-04-21T12:22:10+00:00"
         }
     ],
     "packages-dev": [],
