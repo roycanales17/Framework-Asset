@@ -5,5 +5,4 @@
 
 	# Built-In Functions
 	require_once '../vendor/autoload.php';
-	require_once '../app/Standard.php';
 	require_once '../app/Kernel.php';
