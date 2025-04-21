@@ -239,16 +239,16 @@
         },
         {
             "name": "roy404/utilities",
-            "version": "v1.4.0",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roycanales17/Web-Utilities.git",
-                "reference": "7897ff1cdf045ff12100f3b679d49dc8d954da9f"
+                "reference": "d5ff7fa939d3f7dea19a66b2cfade26ea64095c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/7897ff1cdf045ff12100f3b679d49dc8d954da9f",
-                "reference": "7897ff1cdf045ff12100f3b679d49dc8d954da9f",
+                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/d5ff7fa939d3f7dea19a66b2cfade26ea64095c3",
+                "reference": "d5ff7fa939d3f7dea19a66b2cfade26ea64095c3",
                 "shasum": ""
             },
             "require": {
@@ -264,9 +264,7 @@
                 ],
                 "psr-4": {
                     "App\\Http\\": "http",
-                    "App\\Utilities\\": "src",
-                    "App\\Utilities\\Handler\\": "src/handler",
-                    "App\\Utilities\\Blueprints\\": "src/blueprints"
+                    "App\\Utilities\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -286,9 +284,9 @@
             ],
             "support": {
                 "issues": "https://github.com/roycanales17/Web-Utilities/issues",
-                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.4.0"
+                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.4.1"
             },
-            "time": "2025-04-21T11:36:23+00:00"
+            "time": "2025-04-21T12:00:05+00:00"
         }
     ],
     "packages-dev": [],
