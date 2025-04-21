@@ -40,9 +40,10 @@
 		validate_token();
 
 		// Configure cache
-		$cache = $conf['cache']['driver'];
-		$cache_attr = $conf['cache'][$cache];
-		Cache::configure($cache_attr['driver'], $cache_attr['server'], $cache_attr['port']);
+		if ($cache = $conf['cache']['driver'] ?? '') {
+			$cache_attr = $conf['cache'][$cache];
+			Cache::configure($cache_attr['driver'], $cache_attr['server'], $cache_attr['port']);
+		}
 
 		// Configure Routes
 		foreach ($conf['routes'] ?? [] as $route) {
