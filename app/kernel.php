@@ -10,6 +10,7 @@
 	use App\Utilities\Session;
 	use App\Utilities\Logger;
 	use App\Utilities\Server;
+	use App\Utilities\Mail;
 
 	Application::run(function () {
 
@@ -43,6 +44,21 @@
 		if ($cache = $conf['cache']['driver'] ?? '') {
 			$cache_attr = $conf['cache'][$cache];
 			Cache::configure($cache_attr['driver'], $cache_attr['server'], $cache_attr['port']);
+		}
+
+		// Configure mail
+		$mail = $conf['mailing'] ?? [];
+		if (!empty($mail['enabled'])) {
+			$credentials = [];
+
+			if (!empty($mail['username']) && !empty($mail['password'])) {
+				$credentials = [
+					'username' => $mail['username'],
+					'password' => $mail['password'],
+				];
+			}
+
+			Mail::config($mail['host'], $mail['port'], $credentials);
 		}
 
 		// Configure Routes
