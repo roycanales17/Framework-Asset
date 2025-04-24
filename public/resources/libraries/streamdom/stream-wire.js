@@ -1,3 +1,4 @@
+import '../morphdom/morphdom-umd.min.js';
 import {load} from "./wire-directives.js";
 
 class stream {
