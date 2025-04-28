@@ -37,6 +37,12 @@
 		define('DEVELOPMENT', in_array(config('APP_ENV'), ['development', 'production', 'local', 'staging']));
 		define('CSRF_TOKEN', csrf_token());
 
+		// Register the costume global variables
+		foreach ($conf['defines'] as $key => $value) {
+			if (!defined($key))
+				define($key, $value);
+		}
+
 		// Validate CSRF Token
 		validate_token();
 
