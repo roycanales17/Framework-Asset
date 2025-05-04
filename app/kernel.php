@@ -6,7 +6,6 @@
 	use App\Utilities\Stream;
 	use App\Utilities\Application;
 	use App\Utilities\Cache;
-	use App\Utilities\Session;
 	use App\Utilities\Logger;
 	use App\Utilities\Mail;
 
@@ -14,9 +13,6 @@
 
 		// Set the root directory for views
 		Stream::load($conf['stream'] ?? '');
-
-		// Start session
-		Session::start();
 
 		// Capture global request variables
 		Request::capture();

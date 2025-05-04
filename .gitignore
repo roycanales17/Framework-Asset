@@ -6,4 +6,5 @@ public/build
 
 logs
 vendor
+storage
 node_modules

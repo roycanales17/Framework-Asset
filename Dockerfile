@@ -43,14 +43,6 @@ RUN echo '<Directory /var/www/html>' > /etc/apache2/conf-available/htaccess.conf
     && echo '</Directory>' >> /etc/apache2/conf-available/htaccess.conf \
     && a2enconf htaccess
 
-# Create session storage directory with proper permissions
-RUN mkdir -p /var/lib/php/sessions \
-    && chown -R www-data:www-data /var/lib/php/sessions \
-    && chmod 700 /var/lib/php/sessions
-
-# Set session save path in PHP config
-RUN echo "session.save_path = /var/lib/php/sessions" > /usr/local/etc/php/conf.d/session.ini
-
 # Set the document root to the public folder
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/default-ssl.conf

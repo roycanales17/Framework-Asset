@@ -178,16 +178,16 @@
         },
         {
             "name": "roy404/eloquent",
-            "version": "1.0.1",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roycanales17/Eloquent-Class.git",
-                "reference": "44833383cb33708bff8a9a7c0c21b6c6a7f04ae0"
+                "reference": "6efe395e028a3d1fd44a0b4edec8787de46970ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roycanales17/Eloquent-Class/zipball/44833383cb33708bff8a9a7c0c21b6c6a7f04ae0",
-                "reference": "44833383cb33708bff8a9a7c0c21b6c6a7f04ae0",
+                "url": "https://api.github.com/repos/roycanales17/Eloquent-Class/zipball/6efe395e028a3d1fd44a0b4edec8787de46970ab",
+                "reference": "6efe395e028a3d1fd44a0b4edec8787de46970ab",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,8 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Illuminate\\Databases\\": "src/"
+                    "App\\Database\\": "src/",
+                    "App\\Databases\\Scheme\\": "src/Databases/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -216,9 +217,9 @@
             ],
             "support": {
                 "issues": "https://github.com/roycanales17/Eloquent-Class/issues",
-                "source": "https://github.com/roycanales17/Eloquent-Class/tree/1.0.1"
+                "source": "https://github.com/roycanales17/Eloquent-Class/tree/v1.0.5"
             },
-            "time": "2024-02-19T12:05:55+00:00"
+            "time": "2025-05-04T15:51:48+00:00"
         },
         {
             "name": "roy404/request",
@@ -319,17 +320,61 @@
             "time": "2025-04-04T04:09:22+00:00"
         },
         {
-            "name": "roy404/utilities",
-            "version": "v1.5.0",
+            "name": "roy404/schema",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/roycanales17/Web-Utilities.git",
-                "reference": "7c2373ed6451401b5faac820ff0bf096f5331f34"
+                "url": "https://github.com/roycanales17/Database-Schema.git",
+                "reference": "3375e633eec7e5f7be96a25b602898280c19642a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/7c2373ed6451401b5faac820ff0bf096f5331f34",
-                "reference": "7c2373ed6451401b5faac820ff0bf096f5331f34",
+                "url": "https://api.github.com/repos/roycanales17/Database-Schema/zipball/3375e633eec7e5f7be96a25b602898280c19642a",
+                "reference": "3375e633eec7e5f7be96a25b602898280c19642a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Database\\Facades\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robroy Canales",
+                    "email": "canales.robroy123@gmail.com"
+                }
+            ],
+            "description": "The Schema Builder class is a part of the database layer that allows you to define database tables and their columns using a fluent syntax. It provides a way to create and manipulate database tables without writing SQL queries directly.",
+            "keywords": [
+                "php",
+                "plugins"
+            ],
+            "support": {
+                "issues": "https://github.com/roycanales17/Database-Schema/issues",
+                "source": "https://github.com/roycanales17/Database-Schema/tree/1.0.1"
+            },
+            "time": "2024-02-19T13:09:40+00:00"
+        },
+        {
+            "name": "roy404/utilities",
+            "version": "v1.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/roycanales17/Web-Utilities.git",
+                "reference": "da277b97c9ed75952bd0a7af93d39d8c3e140512"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/da277b97c9ed75952bd0a7af93d39d8c3e140512",
+                "reference": "da277b97c9ed75952bd0a7af93d39d8c3e140512",
                 "shasum": ""
             },
             "require": {
@@ -338,7 +383,8 @@
                 "roy404/artisan": "^1.0",
                 "roy404/blades": "^1.0",
                 "roy404/eloquent": "^1.0",
-                "roy404/request": "^3.0"
+                "roy404/request": "^3.0",
+                "roy404/schema": "^1.0"
             },
             "type": "library",
             "autoload": {
@@ -367,9 +413,9 @@
             ],
             "support": {
                 "issues": "https://github.com/roycanales17/Web-Utilities/issues",
-                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.5.0"
+                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.5.3"
             },
-            "time": "2025-05-04T13:27:37+00:00"
+            "time": "2025-05-04T15:54:02+00:00"
         }
     ],
     "packages-dev": [],

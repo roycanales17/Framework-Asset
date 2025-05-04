@@ -31,8 +31,7 @@
 			'APP_PUBLIC' => "$root/public",
 			'APP_URL' => $url,
 			'APP_FULL_URL' => "$url$uri",
-			'DEVELOPMENT' => in_array(config('APP_ENV'), $dev),
-			'CSRF_TOKEN' => csrf_token(),
+			'DEVELOPMENT' => in_array(config('APP_ENV'), $dev)
 		];
 	})(),
 
@@ -68,7 +67,7 @@
 	|
 	*/
 	'session' => [
-		'driver' => 'file',          // Supported: file, redis, database, array, custom
+		'driver' => 'file',      	 // Supported: file, database, redis
 		'lifetime' => 120,           // Session lifetime in minutes
 		'expire_on_close' => false,  // Whether session expires when the browser closes
 		'encrypt' => false,          // Encrypt session data (if you implement encryption)
@@ -79,6 +78,39 @@
 		'same_site' => 'Lax',        // Options: Lax, Strict, None
 		'storage_path' => '../storage/sessions', // For 'file' driver
 	],
+
+	/*
+	|--------------------------------------------------------------------------
+	| Database Configuration
+	|--------------------------------------------------------------------------
+	|
+	| Controls how database connections are managed.
+	| You can define multiple database connections here (MySQL, SQLite, PostgreSQL, etc.).
+	|
+	*/
+	'database' => [
+		'default' => 'mysql',  // The default database connection to use
+
+		'connections' => [
+			'mysql' => [
+				'driver' => 'mysql',  // Database type
+				'host' => config('DB_HOST', '127.0.0.1'),  // Hostname or IP address
+				'port' => config('DB_PORT', '3306'),  // Port number
+				'database' => config('DB_DATABASE', 'your_database_name'),  // Database name
+				'username' => config('DB_USERNAME', 'root'),  // Database username
+				'password' => config('DB_PASSWORD', ''),  // Database password
+				'unix_socket' => config('DB_SOCKET', ''),  // Unix socket (optional)
+				'charset' => 'utf8mb4',  // Database charset
+				'collation' => 'utf8mb4_unicode_ci',  // Collation type
+				'prefix' => '',  // Table prefix (optional)
+				'strict' => true,  // Enable strict mode for SQL queries
+				'engine' => null,  // Database engine (e.g., InnoDB, MyISAM)
+			],
+
+			// For now only (mysql/pdo) is supported...
+		]
+	],
+
 
 	/*
 	|--------------------------------------------------------------------------
