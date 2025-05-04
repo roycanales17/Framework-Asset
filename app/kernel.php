@@ -37,8 +37,20 @@
 		define('DEVELOPMENT', in_array(config('APP_ENV'), ['development', 'production', 'local', 'staging']));
 		define('CSRF_TOKEN', csrf_token());
 
+		// Custom preload files
+		foreach ($conf['preload_files'] ?? [] as $path) {
+			if (file_exists($path)) {
+				require_once $path;
+			} else {
+				$path = trim($path, '/');
+				$path = config('APP_ROOT') . "/$path";
+				if (file_exists($path))
+					require_once $path;
+			}
+		}
+
 		// Custom global variables
-		foreach ($conf['defines'] as $key => $value) {
+		foreach ($conf['defines'] ?? [] as $key => $value) {
 			if (!defined($key))
 				define($key, $value);
 		}
