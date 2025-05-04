@@ -1,6 +1,7 @@
 <?php
 
 	use App\Utilities\Blueprints\CacheDriver;
+	use App\Utilities\Server;
 
 	return [
 
@@ -13,7 +14,27 @@
 	| This allows for the creation of global variables across the application.
 	|
 	*/
-	'defines' => [],
+	'defines' => (function () {
+		$host = Server::HostName();
+		$scheme = Server::IsSecureConnection() ? 'https' : 'http';
+		$uri = Server::RequestURI();
+
+		$root = dirname(__DIR__);
+		$url = "$scheme://$host";
+		$dev = ['development', 'local', 'staging'];
+
+		return [
+			'APP_HOST' => $host,
+			'APP_SCHEME' => $scheme,
+			'APP_URI_PARAMS' => $uri,
+			'APP_ROOT' => $root,
+			'APP_PUBLIC' => "$root/public",
+			'APP_URL' => $url,
+			'APP_FULL_URL' => "$url$uri",
+			'DEVELOPMENT' => in_array(config('APP_ENV'), $dev),
+			'CSRF_TOKEN' => csrf_token(),
+		];
+	})(),
 
 	/*
 	|--------------------------------------------------------------------------
