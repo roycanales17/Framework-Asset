@@ -60,7 +60,7 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_PORT: ${DB_PORT:-3306}
-      PMA_USER: ${DB_USER:-admin}
+      PMA_USER: ${DB_USER:-root}
       PMA_PASSWORD: ${DB_PASSWORD:-admin}
     ports:
       - "${PMA_PORT:-8080}:80"
