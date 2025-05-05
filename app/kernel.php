@@ -1,36 +1,12 @@
 <?php
 
 	use App\Routes\Route;
-	use App\Headers\Request;
-
-	use App\Utilities\Stream;
 	use App\Utilities\Application;
 	use App\Utilities\Cache;
 	use App\Utilities\Logger;
 	use App\Utilities\Mail;
 
 	Application::run(function ($conf) {
-
-		// Set the root directory for views
-		Stream::load($conf['stream'] ?? '');
-
-		// Capture global request variables
-		Request::capture();
-
-		// Custom preload files
-		foreach ($conf['preload_files'] ?? [] as $path) {
-			if (file_exists($path)) {
-				require_once $path;
-			} else {
-				$path = trim($path, '/');
-				$path = config('APP_ROOT') . "/$path";
-				if (file_exists($path))
-					require_once $path;
-			}
-		}
-
-		// Validate CSRF Token
-		validate_token();
 
 		// Configure cache
 		if ($cache = $conf['cache']['driver'] ?? '') {
@@ -50,7 +26,7 @@
 				];
 			}
 
-			Mail::config($mail['host'], $mail['port'], $credentials);
+			Mail::configure($mail['host'], $mail['port'], $credentials);
 		}
 
 		// Configure Routes
