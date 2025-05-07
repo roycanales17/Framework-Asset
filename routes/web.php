@@ -3,5 +3,5 @@
 	use App\Routes\Route;
 
 	Route::get('/', function () {
-		return render('home', ['welcome' => 'Hello Robroy!']);
+		return compile('home', ['welcome' => 'Hello Robroy!']);
 	});
