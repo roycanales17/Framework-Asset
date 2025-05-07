@@ -1,6 +1,7 @@
 <?php
 
-	namespace Components;
+	namespace components\Subscribe;
+
 	use App\Utilities\Component;
 
 	class Subscribe extends Component
@@ -9,7 +10,7 @@
 
 		public function render(): string
 		{
-			return view('templates/subscribe', [
+			return $this->compile([
 				'email' => $this->email
 			]);
 		}

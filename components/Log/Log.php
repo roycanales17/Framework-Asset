@@ -1,6 +1,7 @@
 <?php
 
-	namespace Components;
+	namespace components\Log;
+
 	use App\Utilities\Component;
 
 	class Log extends Component
@@ -16,7 +17,7 @@
 
 		public function render(): string
 		{
-			return view('templates/log', [
+			return $this->compile([
 				'index' => $this->index,
 				'message' => $this->message
 			]);
