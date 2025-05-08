@@ -114,7 +114,11 @@ class stream {
 		})
 		.then(response => {
 			if (!response.ok) {
-				console.error(`HTTP error! Status: ${response.status}`);
+				console.error(
+					`%c❌ HTTP ERROR! %cStatus: ${response.status} 🚫`,
+					'color: red; font-weight: bold;',
+					'color: orange;'
+				);
 				if (response.status === 500) {
 					response.text().then(errorHtml => {
 						this.component.innerHTML += errorHtml;
