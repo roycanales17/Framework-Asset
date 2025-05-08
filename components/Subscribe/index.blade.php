@@ -1,4 +1,4 @@
-<labe class="font-bold">Registered Email: {{ $email }}</labe>
+<label class="font-bold">Registered Email: {{ $email }}</label>
 <input type="text"
        class="input"
        placeholder="Enter your email to subscribe"
