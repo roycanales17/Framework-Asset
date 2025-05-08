@@ -134,16 +134,16 @@
         },
         {
             "name": "roy404/blades",
-            "version": "v1.0.20",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roycanales17/Blades-Compiler.git",
-                "reference": "7a06440bca3ec09e460d5b4e93b572326e41f949"
+                "reference": "8e92633f41c14f575f7c9e2a283bd7719ca64586"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roycanales17/Blades-Compiler/zipball/7a06440bca3ec09e460d5b4e93b572326e41f949",
-                "reference": "7a06440bca3ec09e460d5b4e93b572326e41f949",
+                "url": "https://api.github.com/repos/roycanales17/Blades-Compiler/zipball/8e92633f41c14f575f7c9e2a283bd7719ca64586",
+                "reference": "8e92633f41c14f575f7c9e2a283bd7719ca64586",
                 "shasum": ""
             },
             "require": {
@@ -172,9 +172,9 @@
             ],
             "support": {
                 "issues": "https://github.com/roycanales17/Blades-Compiler/issues",
-                "source": "https://github.com/roycanales17/Blades-Compiler/tree/v1.0.20"
+                "source": "https://github.com/roycanales17/Blades-Compiler/tree/v1.1.0"
             },
-            "time": "2025-05-07T13:42:35+00:00"
+            "time": "2025-05-08T15:20:11+00:00"
         },
         {
             "name": "roy404/eloquent",
