@@ -112,7 +112,19 @@ class stream {
 			},
 			body: form
 		})
-		.then(response => response.text())
+			.then(response => {
+				if (!response.ok) {
+					console.error(`HTTP error! Status: ${response.status}`);
+					if (response.status === 500) {
+						response.text().then(errorHtml => {
+							this.component.innerHTML += errorHtml;
+						});
+					}
+					return null;
+				}
+
+				return response.text();
+			})
 		.then(html => {
 			if (html) {
 				morphdom(this.component, html, {
