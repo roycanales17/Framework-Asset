@@ -89,16 +89,16 @@
         },
         {
             "name": "roy404/artisan",
-            "version": "v1.1.7",
+            "version": "v1.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roycanales17/Web-Artisan.git",
-                "reference": "d05d0bc646ff2b3992cd046997aa3836eb1786a4"
+                "reference": "6894f738ccf80cc2eecea9fdc6eff8a1b4ec2fb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roycanales17/Web-Artisan/zipball/d05d0bc646ff2b3992cd046997aa3836eb1786a4",
-                "reference": "d05d0bc646ff2b3992cd046997aa3836eb1786a4",
+                "url": "https://api.github.com/repos/roycanales17/Web-Artisan/zipball/6894f738ccf80cc2eecea9fdc6eff8a1b4ec2fb5",
+                "reference": "6894f738ccf80cc2eecea9fdc6eff8a1b4ec2fb5",
                 "shasum": ""
             },
             "require": {
@@ -128,9 +128,9 @@
             ],
             "support": {
                 "issues": "https://github.com/roycanales17/Web-Artisan/issues",
-                "source": "https://github.com/roycanales17/Web-Artisan/tree/v1.1.7"
+                "source": "https://github.com/roycanales17/Web-Artisan/tree/v1.1.8"
             },
-            "time": "2025-05-04T12:41:42+00:00"
+            "time": "2025-05-10T04:13:47+00:00"
         },
         {
             "name": "roy404/blades",
@@ -365,16 +365,16 @@
         },
         {
             "name": "roy404/utilities",
-            "version": "v1.8.3",
+            "version": "v1.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roycanales17/Web-Utilities.git",
-                "reference": "2e4156de810813d0a17dc46f58fef16084ca2ed6"
+                "reference": "283788705523a038aa845c507052354a79a60ea9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/2e4156de810813d0a17dc46f58fef16084ca2ed6",
-                "reference": "2e4156de810813d0a17dc46f58fef16084ca2ed6",
+                "url": "https://api.github.com/repos/roycanales17/Web-Utilities/zipball/283788705523a038aa845c507052354a79a60ea9",
+                "reference": "283788705523a038aa845c507052354a79a60ea9",
                 "shasum": ""
             },
             "require": {
@@ -414,9 +414,9 @@
             ],
             "support": {
                 "issues": "https://github.com/roycanales17/Web-Utilities/issues",
-                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.8.3"
+                "source": "https://github.com/roycanales17/Web-Utilities/tree/v1.8.4"
             },
-            "time": "2025-05-10T03:08:16+00:00"
+            "time": "2025-05-10T03:49:07+00:00"
         }
     ],
     "packages-dev": [],
