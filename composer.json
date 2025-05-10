@@ -8,9 +8,9 @@
     ],
     "require": {
         "php": "^8.1",
-        "roy404/utilities": "^1.4.0",
-        "roy404/request": "^3.0",
-        "roy404/routes": "^4.0.2",
-        "roy404/blades": "^1.0"
+        "roy404/utilities": "^1.8.4",
+        "roy404/request": "^3.0.5",
+        "roy404/routes": "^4.0.7",
+        "roy404/blades": "^1.1.2"
     }
 }
